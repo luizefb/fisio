@@ -30,13 +30,15 @@ def main(page: ft.Page, route=None):
         bgcolor=ft.colors.GREEN_ACCENT_700,
 
     )
+    def teste():
+        print(nome_paciente.value)
 
     #Botão de enviar o relatorio e salvar
     btn_enviar = ft.ElevatedButton(
         content=ft.Text("Enviar relatório", color="BLACK"),
         adaptive=True,
         bgcolor="WHITE",
-        on_click=open_dlg,
+        on_click= lambda _: teste(),
         style=ft.ButtonStyle(
             padding=30,
             shape=ft.RoundedRectangleBorder(radius=5),
@@ -54,10 +56,13 @@ def main(page: ft.Page, route=None):
     )
     nome_paciente = ft.TextField(
         label="Nome do paciente",
-        max_length = 60
+        max_length = 60,
+        input_filter=ft.TextOnlyInputFilter(),
+        
     )
     idade_paciente = ft.TextField(
         label="Idade do Paciente",
+        input_filter=ft.NumbersOnlyInputFilter()
     )
     sexo_paciente = ft.Dropdown(
         label="Sexo do Paciente",
@@ -70,17 +75,19 @@ def main(page: ft.Page, route=None):
     telefone_paciente = ft.TextField(
         label="Telefone de Paciente",
         prefix_text="(91)",
-        max_length=9
+        max_length=9,
+        input_filter=ft.NumbersOnlyInputFilter()
     )
     profissao_paciente = ft.TextField(
-        label="Profissao do paciente"
+        label="Profissao do paciente",
+        input_filter=ft.TextOnlyInputFilter()
     )
     endereco_paciente = ft.TextField(
         label="Endereço do paciente"
     )
     diagnostico_paciente = ft.TextField(
         label="Diagnostico do paciente",
-        multiline="true",
+        multiline="true"
     )
 
     #Aqui começa a parte "I" de anamnese
@@ -562,7 +569,7 @@ def main(page: ft.Page, route=None):
         label="Espasmos", value=False
     )
     fasciculacoes = ft.Checkbox(
-        label="Fasciculações(micimias", value=False
+        label="Fasciculações(micimias)", value=False
     )
     tremores = ft.Checkbox(
         label="Tremores", value=False
@@ -730,7 +737,9 @@ def main(page: ft.Page, route=None):
 
         ft.Row([
             ft.Column(
-                [ft.Container(has,),ft.Container(cardiopatia,width=300,),ft.Container(dm,),]),
+                [ft.Container(has,),ft.Container(dm,),]),
+            ft.Column(
+               [ft.Container(cardiopatia)])
         ]),
 
         outra_comorbidades,
@@ -761,7 +770,9 @@ def main(page: ft.Page, route=None):
 
         ft.Row([
             ft.Column(
-                [ft.Container(atrofia),ft.Container(hipertrofia),ft.Container(hipotrofia),ft.Container(normotrofia),])
+                [ft.Container(atrofia),ft.Container(hipertrofia)]),
+            ft.Column(
+                [ft.Container(hipotrofia),ft.Container(normotrofia)])
         ]),
         local_trofismo,
 
@@ -778,8 +789,11 @@ def main(page: ft.Page, route=None):
 
         ft.Container(texto_adm,padding=5,),
 
-        ft.Row(
-            [ft.Column([ft.Container(preservada),ft.Container(ilimitada),]),
+        ft.Row([
+            ft.Column(
+                [ft.Container(preservada)]),
+            ft.Column(
+                [ft.Container(ilimitada)])
         ]),
         movimento_adm,
 
@@ -823,17 +837,21 @@ def main(page: ft.Page, route=None):
 
         ft.Container(texto_motricidade,padding=5),
 
-        ft.Container(movimentos_coreicos),
-        ft.Container(movimentos_atetoicos),
-        ft.Container(fasciculacoes),
+        ft.Row([
+            ft.Column(
+                [ft.Container(balismo), ft.Container(miocionia)]),
+            ft.Column(
+                [ft.Container(distonia), ft.Container(solucos)]),
+            ft.Column(
+                [ft.Container(caimbras), ft.Container(tremores)]
+            )
+        ]),
 
         ft.Row([
             ft.Column(
-                [ft.Container(balismo), ft.Container(miocionia), ft.Container(caimbras)]),
+                [ft.Container(movimentos_coreicos), ft.Container(movimentos_atetoicos), ft.Container(fasciculacoes)]),
             ft.Column(
-                [ft.Container(distonia), ft.Container(solucos), ft.Container(tremores), ft.Container()]),
-            ft.Column(
-                [ft.Container(espasmos), ft.Container(tiques), ft.Container(convulsoes)]),
+                [ft.Container(convulsoes), ft.Container(espasmos), ft.Container(tiques)]),
         ]),
 
         ft.Container(texto_coordenacao),
