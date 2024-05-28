@@ -1,13 +1,275 @@
 import flet as ft
 
-
-def main(page: ft.Page, route=None):
+def main(page: ft.Page, route="/relatorio_1"):
     page.title = "Relatorio Fisioterapia"
-    page.window_width=400
+    page.window_width = 400
     page.theme_mode = ft.ThemeMode.LIGHT
     page.scroll = "adaptive"
 
-    #duas funções para a caixa de dialogo no final do código, quando o cliente aperta enviar relatorio
+    # TESTE TROCA DE TELAS!!!!!!!!!
+    def route_change(route):
+        page.views.clear()
+        page.views.append(
+            ft.View(
+                "/",
+                [
+                    menu_topo,
+                    ft.ElevatedButton("Ficha avaliação neurológica", on_click=lambda _: page.go("/relatorio_1")),
+                ],
+            )
+        )
+        #AQUI É A PARTE ONDE EU ADICIONO NA TELA A FICHA
+        if page.route == "/relatorio_1":
+            page.views.append(
+                ft.View(
+
+                    "/relatorio_1",
+                    [
+
+                        menu_topo,
+                        texto_relatorio,
+                        numero_prontuario,
+                        nome_paciente,
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(idade_paciente, width=140)]),
+                            ft.Column(
+                                [ft.Container(sexo_paciente, width=214)])
+                        ]),
+                        telefone_paciente,
+                        profissao_paciente,
+                        endereco_paciente,
+                        diagnostico_paciente,
+
+                        ft.Container(texto_anamnese, padding=5, ),
+
+                        HDA_anamnese,
+
+                        ft.Container(texto_sinais_vitais, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(pa, width=177, ), ft.Container(fc, width=177, )]),
+                            ft.Column(
+                                [ft.Container(fr, width=177, ), ft.Container(sp02, width=177, )])
+                        ]),
+
+                        qp,
+                        ft.Container(texto_comorbidades, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(has, ), ft.Container(dm, ), ]),
+                            ft.Column(
+                                [ft.Container(cardiopatia)])
+                        ]),
+
+                        outra_comorbidades,
+                        af,
+                        medicamentos_uso,
+                        queda_12meses,
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(queda_sim_nao)]),
+                            ft.Column(
+                                [ft.Container(quantas_quedas, width=200)])
+                        ]),
+
+                        ft.Container(texto_inspecao, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(hidratado), ft.Container(andador), ft.Container(cicatriz),
+                                 ft.Container(locomocao_independente), ft.Container(nao_colaborativo),
+                                 ft.Container(hematoma), ft.Container(rubor), ]),
+                            ft.Column(
+                                [ft.Container(muletas), ft.Container(cadeira_rodas), ft.Container(calor),
+                                 ft.Container(colaborativo), ft.Container(corado), ft.Container(edema),
+                                 ft.Container(escara)]
+                            )
+                        ]),
+
+                        local_escara,
+
+                        ft.Container(texto_palpacao, padding=5, ),
+
+                        ft.Container(texto_trofismo, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(atrofia), ft.Container(hipertrofia)]),
+                            ft.Column(
+                                [ft.Container(hipotrofia), ft.Container(normotrofia)])
+                        ]),
+                        local_trofismo,
+
+                        ft.Container(texto_tonus, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(atonia), ft.Container(hipotonia), ft.Container(normotonia), ]),
+                            ft.Column(
+                                [ft.Container(hipertonia), ft.Container(hipertonia_plastica),
+                                 ft.Container(hipertonia_elastica), ])
+                        ]),
+
+                        ft.Container(intensidade_hipertonia),
+
+                        ft.Container(texto_adm, padding=5, ),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(preservada)]),
+                            ft.Column(
+                                [ft.Container(ilimitada)])
+                        ]),
+                        movimento_adm,
+
+                        ft.Container(texto_reflexos, padding=5),
+
+                        ft.Container(texto_reflexos_profundos),
+
+                        ft.Container(texto_direito),
+                        ft.Container(texto_direito_bicipital),
+                        ft.Container(bicipital_direito),
+                        ft.Container(texto_direito_tricciptal),
+                        ft.Container(tricipital_direito),
+                        ft.Container(texto_direito_estilorradial),
+                        ft.Container(estilorradial_direito),
+                        ft.Container(texto_direito_cubitopronador),
+                        ft.Container(cubitopronador_direito),
+                        ft.Container(texto_direito_patelar),
+                        ft.Container(patelar_direito),
+                        ft.Container(texto_direito_aquileu),
+                        ft.Container(aquileu_direito),
+                        ft.Container(texto_direito_adutor),
+                        ft.Container(adutor_direito),
+
+                        ft.Container(texto_esquerdo, ),
+                        ft.Container(texto_esquerdo_bicipital),
+                        ft.Container(bicipital_esquerdo),
+                        ft.Container(texto_esquerdo_tricciptal),
+                        ft.Container(tricipital_esquerdo),
+                        ft.Container(texto_esquerdo_estilorradial),
+                        ft.Container(estilorradial_esquerdo),
+                        ft.Container(texto_esquerdo_cubitopronador),
+                        ft.Container(cubitopronador_esquerdo),
+                        ft.Container(texto_esquerdo_patelar),
+                        ft.Container(patelar_esquerdo),
+                        ft.Container(texto_esquerdo_aquileu),
+                        ft.Container(aquileu_esquerdo),
+                        ft.Container(texto_esquerdo_adutor),
+                        ft.Container(adutor_esquerdo),
+
+                        ft.Container(texto_reflexos_superficiais, padding=5),
+                        ft.Container(texto_direito),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
+                            ),
+                            ft.Column(
+                                [ft.Container(texto_presente), ft.Container(presente_radiobutton_direito_plantar),
+                                 ft.Container(presente_checkbox_abdominal_direito)]
+                            ),
+                            ft.Column(
+                                [ft.Container(texto_ausente), ft.Container(ausente_checkbox_direito_plantar),
+                                 ft.Container(ausente_checkbox_abdominal_direito)]
+                            )
+                        ]),
+
+                        ft.Container(texto_esquerdo),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
+                            ),
+                            ft.Column(
+                                [ft.Container(texto_presente), ft.Container(presente_radiobutton_esquerdo_plantar),
+                                 ft.Container(presente_checkbox_abdominal_esquerdo)]
+                            ),
+                            ft.Column(
+                                [ft.Container(texto_ausente), ft.Container(ausente_checkbox_esquerdo_plantar),
+                                 ft.Container(ausente_checkbox_abdominal_esquerdo)]
+                            )
+                        ]),
+
+                        ft.Container(texto_obs),
+
+                        ft.Container(texto_motricidade, padding=5),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(balismo), ft.Container(miocionia)]),
+                            ft.Column(
+                                [ft.Container(distonia), ft.Container(solucos)]),
+                            ft.Column(
+                                [ft.Container(caimbras), ft.Container(tremores)]
+                            )
+                        ]),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(movimentos_coreicos), ft.Container(movimentos_atetoicos),
+                                 ft.Container(fasciculacoes)]),
+                            ft.Column(
+                                [ft.Container(convulsoes), ft.Container(espasmos), ft.Container(tiques)]),
+                        ]),
+
+                        ft.Container(texto_atividades_funcionais),
+
+                        ft.Container(ddp),
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(quatro_apoios), ft.Container(quatro_ajoelhado),
+                                 ft.Container(semi_ajoelhado), ft.Container(arrastar_cruzado)]
+                            )
+                        ]),
+
+                        ft.Container(dle),
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(sentado), ft.Container(ajoelhado), ft.Container(rolar),
+                                 ft.Container(arrastar)]
+                            )
+                        ]),
+
+                        ft.Container(texto_coordenacao),
+
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(index_index)]),
+                            ft.Column(
+                                [ft.Container(index_nariz)]),
+                        ]),
+                        ft.Container(calcanhar_joelho, alignment=ft.alignment.center),
+
+                        ft.Container(texto_equilibrio, padding=5),
+                        ft.Container(texto_tronco, padding=5),
+                        tronco,
+                        ft.Container(texto_romberg, padding=5),
+                        romberg,
+                        ft.Container(texto_romberg_sensi, padding=5),
+                        romberg_sensibilizado,
+                        ft.Container(texto_avd, padding=5),
+                        avd,
+                        ft.Container(texto_testes_funcionais, padding=5),
+                        testes_funcionas,
+                        ft.Container(texto_avaliacao_marcha, padding=5),
+                        avaliacao_marcha,
+                        ft.Container(texto_observacoes, padding=5),
+                        observacoes,
+
+                        ft.Container(btn_enviar, alignment=ft.alignment.center),
+
+                    ],
+                )
+            )
+        page.update()
+
+    # duas funções para a caixa de dialogo no final do código, quando o cliente aperta enviar relatorio
     def open_dlg(e):
         page.dialog = dlg
         dlg.open = True
@@ -17,12 +279,17 @@ def main(page: ft.Page, route=None):
         title=ft.Text("Relatório enviado com sucesso!"), on_dismiss=lambda e: print("Dialog dismissed!")
     )
 
-    def view_pop(e):
+    def view_pop(view):
         page.views.pop()
         top_view = page.views[-1]
         page.go(top_view.route)
 
-    #Topo do programa, onde fica escrito Laboratorio fisioterapia com um fundo verde
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.scroll = ft.ScrollMode.ALWAYS
+    page.go(page.route)
+
+    # Topo do programa, onde fica escrito Laboratorio fisioterapia com um fundo verde
     menu_topo = ft.AppBar(
 
         title=ft.Text("Laboratório Fisioterapia", size=20, color="WHITE"),
@@ -30,35 +297,38 @@ def main(page: ft.Page, route=None):
         bgcolor=ft.colors.GREEN_ACCENT_700,
 
     )
+
     def teste():
         print(nome_paciente.value)
 
-    #Botão de enviar o relatorio e salvar
+    # Botão de enviar o relatorio e salvar
     btn_enviar = ft.ElevatedButton(
         content=ft.Text("Enviar relatório", color="BLACK"),
         adaptive=True,
         bgcolor="WHITE",
-        on_click= lambda _: teste(),
+        on_click=lambda _: teste(),
         style=ft.ButtonStyle(
             padding=30,
             shape=ft.RoundedRectangleBorder(radius=5),
         ),
     )
-    #Todas as variaveis com "texto_" no nome, são textos que indicam algo no app
+    # Todas as variaveis com "texto_" no nome, são textos que indicam algo no app
     texto_relatorio = ft.Text(
         "Avaliação Neurofuncional",
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-    #Aqui para baixo são todas as info do cliente, termina antes de anmasseses la
+    # Aqui para baixo são todas as info do cliente, termina antes de anmasseses la
     numero_prontuario = ft.TextField(
-        label="Nº do Prontuário"
+        label="Nº do Prontuário",
+        disabled=True,
+        value="123"
     )
     nome_paciente = ft.TextField(
         label="Nome do paciente",
-        max_length = 60,
+        max_length=60,
         input_filter=ft.TextOnlyInputFilter(),
-        
+
     )
     idade_paciente = ft.TextField(
         label="Idade do Paciente",
@@ -90,7 +360,7 @@ def main(page: ft.Page, route=None):
         multiline="true"
     )
 
-    #Aqui começa a parte "I" de anamnese
+    # Aqui começa a parte "I" de anamnese
     texto_anamnese = ft.Text(
         "I-Anamnese",
         size=25,
@@ -162,7 +432,7 @@ def main(page: ft.Page, route=None):
         label="Quantas?"
     )
 
-    #Aqui começa "II" de Inspeção
+    # Aqui começa "II" de Inspeção
     texto_inspecao = ft.Text(
         "II-Inspeção",
         size=25,
@@ -214,7 +484,7 @@ def main(page: ft.Page, route=None):
         label="Local:"
     )
 
-    #Aqui começa "III" de palpação
+    # Aqui começa "III" de palpação
     texto_palpacao = ft.Text(
         "III-Palpação",
         size=25,
@@ -272,7 +542,7 @@ def main(page: ft.Page, route=None):
         ]
     )
 
-    #Aqui começa o "IV" de ADM
+    # Aqui começa o "IV" de ADM
     texto_adm = ft.Text(
         "IV-ADM",
         size=25,
@@ -288,21 +558,21 @@ def main(page: ft.Page, route=None):
         label="Movimento:"
     )
 
-    #Aqui começa "V" de reflexos
+    # Aqui começa "V" de reflexos
     texto_reflexos = ft.Text(
         "V-Reflexos",
         size=25,
         weight=ft.FontWeight.BOLD,
     )
 
-    #Aqui é o reflexos profundos
+    # Aqui é o reflexos profundos
     texto_reflexos_profundos = ft.Text(
         "Reflexos Profundos",
         size=20,
         weight=ft.FontWeight.BOLD,
     )
 
-    #Aqui é a parte do direito
+    # Aqui é a parte do direito
     texto_direito = ft.Text(
         ">Direito",
         size=25,
@@ -315,7 +585,6 @@ def main(page: ft.Page, route=None):
     )
     bicipital_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -324,13 +593,12 @@ def main(page: ft.Page, route=None):
         ]
     )
     texto_direito_tricciptal = ft.Text(
-        "Tricciptal",
+        "Triciptal",
         size=15,
         weight=ft.FontWeight.BOLD,
     )
     tricipital_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -346,7 +614,6 @@ def main(page: ft.Page, route=None):
     )
     estilorradial_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -361,7 +628,6 @@ def main(page: ft.Page, route=None):
     )
     cubitopronador_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -376,7 +642,6 @@ def main(page: ft.Page, route=None):
     )
     patelar_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -391,7 +656,6 @@ def main(page: ft.Page, route=None):
     )
     aquileu_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -406,7 +670,6 @@ def main(page: ft.Page, route=None):
     )
     adutor_direito = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -415,7 +678,7 @@ def main(page: ft.Page, route=None):
         ]
     )
 
-    #Aqui é a parte do esquerdo
+    # Aqui é a parte do esquerdo
     texto_esquerdo = ft.Text(
         ">Esquerdo",
         size=25,
@@ -428,7 +691,6 @@ def main(page: ft.Page, route=None):
     )
     bicipital_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -443,7 +705,6 @@ def main(page: ft.Page, route=None):
     )
     tricipital_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -459,7 +720,6 @@ def main(page: ft.Page, route=None):
     )
     estilorradial_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -474,7 +734,6 @@ def main(page: ft.Page, route=None):
     )
     cubitopronador_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -489,7 +748,6 @@ def main(page: ft.Page, route=None):
     )
     patelar_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -504,7 +762,6 @@ def main(page: ft.Page, route=None):
     )
     aquileu_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -519,7 +776,6 @@ def main(page: ft.Page, route=None):
     )
     adutor_esquerdo = ft.Dropdown(
         label="",
-        width=200,
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -528,10 +784,66 @@ def main(page: ft.Page, route=None):
         ]
     )
 
-    #Aqui é a parte dos reflexos superficiais
+    # Aqui é a parte dos reflexos superficiais
     texto_reflexos_superficiais = ft.Text(
         "Reflexos superficiais",
         size=20,
+        weight=ft.FontWeight.BOLD,
+    )
+    texto_presente = ft.Text(
+        "Presente",
+        size=15,
+        weight=ft.FontWeight.BOLD,
+    )
+    texto_ausente = ft.Text(
+        "Ausente",
+        size=15,
+        weight=ft.FontWeight.BOLD,
+    )
+    texto_plantar = ft.Text(
+        "Cutâneo plantar",
+        size=15,
+        weight=ft.FontWeight.BOLD,
+    )
+    presente_radiobutton_direito_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
+        ft.Column([ft.Radio(value="F", label="F")]),
+        ft.Column([ft.Radio(value="E", label="E")])
+    ])
+    ])
+    )
+    ausente_checkbox_direito_plantar = ft.Checkbox(
+        label="", value=False
+    )
+    texto_abdominal = ft.Text(
+        "Cutâneo abdominal",
+        size=15,
+        weight=ft.FontWeight.BOLD,
+    )
+    presente_checkbox_abdominal_direito = ft.Checkbox(
+        label="", value=False
+    )
+    ausente_checkbox_abdominal_direito = ft.Checkbox(
+        label="", value=False
+    )
+
+    presente_radiobutton_esquerdo_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
+        ft.Column([ft.Radio(value="F", label="F")]),
+        ft.Column([ft.Radio(value="E", label="E")])
+    ])
+    ])
+    )
+    ausente_checkbox_esquerdo_plantar = ft.Checkbox(
+        label="", value=False
+    )
+    presente_checkbox_abdominal_esquerdo = ft.Checkbox(
+        label="", value=False
+    )
+    ausente_checkbox_abdominal_esquerdo = ft.Checkbox(
+        label="", value=False
+    )
+    texto_obs = ft.Text(
+        "F: flexão E:extensão (Babinski +)",
+        size=12,
         weight=ft.FontWeight.BOLD,
     )
 
@@ -540,7 +852,6 @@ def main(page: ft.Page, route=None):
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-
     movimentos_coreicos = ft.Checkbox(
         label="Movimentos coreicos", value=False
     )
@@ -577,6 +888,41 @@ def main(page: ft.Page, route=None):
     tiques = ft.Checkbox(
         label="Tiques", value=False
     )
+    texto_atividades_funcionais = ft.Text(
+        "VII-Atividades funcionais",
+        size=25,
+        weight=ft.FontWeight.BOLD,
+    )
+    ddp = ft.Checkbox(
+        label="D.D p/ D.L.E.: D.D p/ D.L.D", tristate=True
+    )
+    quatro_apoios = ft.Checkbox(
+        label="4 apoios", tristate=True
+    )
+    quatro_ajoelhado = ft.Checkbox(
+        label="4 apoios p/ajoelhado", tristate=True
+    )
+    semi_ajoelhado = ft.Checkbox(
+        label="Semi ajoelhado p/ de pé", tristate=True
+    )
+    arrastar_cruzado = ft.Checkbox(
+        label="Arrastar cruzado", tristate=True
+    )
+    dle = ft.Checkbox(
+        label="D.L.E. p/ D.V.: D.L.D. p/ D.V", tristate=True
+    )
+    sentado = ft.Checkbox(
+        label="Sentado", tristate=True
+    )
+    ajoelhado = ft.Checkbox(
+        label="Ajoelhado p/semi ajoelhado", tristate=True
+    )
+    rolar = ft.Checkbox(
+        label="Rolar", tristate=True
+    )
+    arrastar = ft.Checkbox(
+        label="Arrastar homolateral", tristate=True
+    )
     texto_coordenacao = ft.Text(
         "VIII-Coordenação(presente ou ausente)",
         size=25,
@@ -586,7 +932,7 @@ def main(page: ft.Page, route=None):
         label="Index-Index",
         width=175,
         options=[
-            ft.dropdown.Option("+","+"),
+            ft.dropdown.Option("+", "+"),
             ft.dropdown.Option("-", "-")
         ]
     )
@@ -701,8 +1047,9 @@ def main(page: ft.Page, route=None):
         max_length=500
     )
 
-    #Adicionando os elementos na page
-    page.add(
+    # Adicionando os elementos na page
+    """page.add(
+
         menu_topo,
         texto_relatorio,
         numero_prontuario,
@@ -710,36 +1057,36 @@ def main(page: ft.Page, route=None):
 
         ft.Row([
             ft.Column(
-                [ft.Container(idade_paciente,width=140)]),
+                [ft.Container(idade_paciente, width=140)]),
             ft.Column(
-                [ft.Container(sexo_paciente,width=214)])
+                [ft.Container(sexo_paciente, width=214)])
         ]),
-            telefone_paciente,
-            profissao_paciente,
-            endereco_paciente,
-            diagnostico_paciente,
+        telefone_paciente,
+        profissao_paciente,
+        endereco_paciente,
+        diagnostico_paciente,
 
-        ft.Container(texto_anamnese,padding=5,),
+        ft.Container(texto_anamnese, padding=5, ),
 
         HDA_anamnese,
 
-        ft.Container(texto_sinais_vitais,padding=5,),
+        ft.Container(texto_sinais_vitais, padding=5, ),
 
         ft.Row([
             ft.Column(
-                [ft.Container(pa,width=177,),ft.Container(fc,width=177,)]),
+                [ft.Container(pa, width=177, ), ft.Container(fc, width=177, )]),
             ft.Column(
-                [ft.Container(fr,width=177,),ft.Container(sp02,width=177,)])
+                [ft.Container(fr, width=177, ), ft.Container(sp02, width=177, )])
         ]),
 
-            qp,
-        ft.Container(texto_comorbidades,padding=5,),
+        qp,
+        ft.Container(texto_comorbidades, padding=5, ),
 
         ft.Row([
             ft.Column(
-                [ft.Container(has,),ft.Container(dm,),]),
+                [ft.Container(has, ), ft.Container(dm, ), ]),
             ft.Column(
-               [ft.Container(cardiopatia)])
+                [ft.Container(cardiopatia)])
         ]),
 
         outra_comorbidades,
@@ -751,43 +1098,48 @@ def main(page: ft.Page, route=None):
             ft.Column(
                 [ft.Container(queda_sim_nao)]),
             ft.Column(
-                [ft.Container(quantas_quedas,width=200)])
+                [ft.Container(quantas_quedas, width=200)])
         ]),
 
-        ft.Container(texto_inspecao,padding=5,),
+        ft.Container(texto_inspecao, padding=5, ),
 
         ft.Row([
             ft.Column(
-                [ft.Container(hidratado),ft.Container(muletas),ft.Container(andador),ft.Container(cadeira_rodas),ft.Container(cicatriz),ft.Container(calor),ft.Container(locomocao_independente),
-                    ft.Container(colaborativo),ft.Container(nao_colaborativo),ft.Container(corado),ft.Container(hematoma),ft.Container(edema),ft.Container(rubor),ft.Container(escara),]),
+                [ft.Container(hidratado), ft.Container(andador), ft.Container(cicatriz),
+                 ft.Container(locomocao_independente), ft.Container(nao_colaborativo), ft.Container(hematoma),
+                 ft.Container(rubor), ]),
+            ft.Column(
+                [ft.Container(muletas), ft.Container(cadeira_rodas), ft.Container(calor), ft.Container(colaborativo),
+                 ft.Container(corado), ft.Container(edema), ft.Container(escara)]
+            )
         ]),
 
         local_escara,
 
-        ft.Container(texto_palpacao,padding=5,),
+        ft.Container(texto_palpacao, padding=5, ),
 
-        ft.Container(texto_trofismo,padding=5,),
+        ft.Container(texto_trofismo, padding=5, ),
 
         ft.Row([
             ft.Column(
-                [ft.Container(atrofia),ft.Container(hipertrofia)]),
+                [ft.Container(atrofia), ft.Container(hipertrofia)]),
             ft.Column(
-                [ft.Container(hipotrofia),ft.Container(normotrofia)])
+                [ft.Container(hipotrofia), ft.Container(normotrofia)])
         ]),
         local_trofismo,
 
-        ft.Container(texto_tonus,padding=5,),
+        ft.Container(texto_tonus, padding=5, ),
 
         ft.Row([
             ft.Column(
-                [ft.Container(atonia),ft.Container(hipotonia),ft.Container(normotonia),]),
+                [ft.Container(atonia), ft.Container(hipotonia), ft.Container(normotonia), ]),
             ft.Column(
-                [ft.Container(hipertonia),ft.Container(hipertonia_plastica),ft.Container(hipertonia_elastica),])
+                [ft.Container(hipertonia), ft.Container(hipertonia_plastica), ft.Container(hipertonia_elastica), ])
         ]),
 
         ft.Container(intensidade_hipertonia),
 
-        ft.Container(texto_adm,padding=5,),
+        ft.Container(texto_adm, padding=5, ),
 
         ft.Row([
             ft.Column(
@@ -797,7 +1149,7 @@ def main(page: ft.Page, route=None):
         ]),
         movimento_adm,
 
-        ft.Container(texto_reflexos,padding=5),
+        ft.Container(texto_reflexos, padding=5),
 
         ft.Container(texto_reflexos_profundos),
 
@@ -817,7 +1169,7 @@ def main(page: ft.Page, route=None):
         ft.Container(texto_direito_adutor),
         ft.Container(adutor_direito),
 
-        ft.Container(texto_esquerdo,),
+        ft.Container(texto_esquerdo, ),
         ft.Container(texto_esquerdo_bicipital),
         ft.Container(bicipital_esquerdo),
         ft.Container(texto_esquerdo_tricciptal),
@@ -833,9 +1185,42 @@ def main(page: ft.Page, route=None):
         ft.Container(texto_esquerdo_adutor),
         ft.Container(adutor_esquerdo),
 
-        ft.Container(texto_reflexos_superficiais,padding=5),
+        ft.Container(texto_reflexos_superficiais, padding=5),
+        ft.Container(texto_direito),
 
-        ft.Container(texto_motricidade,padding=5),
+        ft.Row([
+            ft.Column(
+                [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
+            ),
+            ft.Column(
+                [ft.Container(texto_presente), ft.Container(presente_radiobutton_direito_plantar),
+                 ft.Container(presente_checkbox_abdominal_direito)]
+            ),
+            ft.Column(
+                [ft.Container(texto_ausente), ft.Container(ausente_checkbox_direito_plantar),
+                 ft.Container(ausente_checkbox_abdominal_direito)]
+            )
+        ]),
+
+        ft.Container(texto_esquerdo),
+
+        ft.Row([
+            ft.Column(
+                [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
+            ),
+            ft.Column(
+                [ft.Container(texto_presente), ft.Container(presente_radiobutton_esquerdo_plantar),
+                 ft.Container(presente_checkbox_abdominal_esquerdo)]
+            ),
+            ft.Column(
+                [ft.Container(texto_ausente), ft.Container(ausente_checkbox_esquerdo_plantar),
+                 ft.Container(ausente_checkbox_abdominal_esquerdo)]
+            )
+        ]),
+
+        ft.Container(texto_obs),
+
+        ft.Container(texto_motricidade, padding=5),
 
         ft.Row([
             ft.Column(
@@ -854,6 +1239,23 @@ def main(page: ft.Page, route=None):
                 [ft.Container(convulsoes), ft.Container(espasmos), ft.Container(tiques)]),
         ]),
 
+        ft.Container(texto_atividades_funcionais),
+
+        ft.Container(ddp),
+        ft.Row([
+            ft.Column(
+                [ft.Container(quatro_apoios), ft.Container(quatro_ajoelhado), ft.Container(semi_ajoelhado),
+                 ft.Container(arrastar_cruzado)]
+            )
+        ]),
+
+        ft.Container(dle),
+        ft.Row([
+            ft.Column(
+                [ft.Container(sentado), ft.Container(ajoelhado), ft.Container(rolar), ft.Container(arrastar)]
+            )
+        ]),
+
         ft.Container(texto_coordenacao),
 
         ft.Row([
@@ -869,9 +1271,9 @@ def main(page: ft.Page, route=None):
         tronco,
         ft.Container(texto_romberg, padding=5),
         romberg,
-        ft.Container(texto_romberg_sensi,padding=5),
+        ft.Container(texto_romberg_sensi, padding=5),
         romberg_sensibilizado,
-        ft.Container(texto_avd,padding=5),
+        ft.Container(texto_avd, padding=5),
         avd,
         ft.Container(texto_testes_funcionais, padding=5),
         testes_funcionas,
@@ -880,6 +1282,8 @@ def main(page: ft.Page, route=None):
         ft.Container(texto_observacoes, padding=5),
         observacoes,
 
-        ft.Container(btn_enviar,alignment=ft.alignment.center),
-    )
-ft.app(target=main)
+        ft.Container(btn_enviar, alignment=ft.alignment.center),
+    )"""
+
+
+ft.app(target=main, view=ft.AppView.FLET_APP)
