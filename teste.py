@@ -149,3 +149,4 @@ def main(page: ft.Page):
     )
 
 ft.app(target=main, view=ft.AppView.FLET_APP)
+# fala galera
