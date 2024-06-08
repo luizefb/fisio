@@ -1,11 +1,24 @@
 import flet as ft
 from flet_core import alignment
+import json
+import requests
+from datetime import date
+
+link = 'https://teste-dbd-default-rtdb.firebaseio.com/'
 
 def main(page: ft.Page, route="/relatorio_1"):
     page.title = "Relatorio Fisioterapia"
     page.window_width = 400
     page.theme_mode = ft.ThemeMode.LIGHT
     page.scroll = "adaptive"
+
+    lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+
+    count = 1
+
+    for i in range(0, 60):
+        lv.controls.append(ft.TextButton(f"Line {count}"))
+        count += 1
 
     # TESTE TROCA DE TELAS!!!!!!!!!
     def route_change(route):
@@ -33,22 +46,6 @@ def main(page: ft.Page, route="/relatorio_1"):
                     ),
                     ft.Container(
                         ft.ElevatedButton(
-                            content=ft.Text("Ficha Geriátrica", color="BLACK"),
-                            adaptive=True,
-                            bgcolor="WHITE",
-                            on_click=lambda _: page.go("/relatorio_2"),
-                            width=200,
-                            style=ft.ButtonStyle(
-                                padding=30,
-                                shape=ft.RoundedRectangleBorder(radius=5),
-                            ),
-                        ),
-                            ft.padding.only(top=50),
-                            alignment=ft.alignment.center,
-
-                    ),
-                    ft.Container(
-                        ft.ElevatedButton(
                             content=ft.Text("Área do Professor", color="BLACK"),
                             adaptive=True,
                             bgcolor="WHITE",
@@ -61,7 +58,6 @@ def main(page: ft.Page, route="/relatorio_1"):
                         ),
                         ft.padding.only(top=50),
                         alignment=ft.alignment.center,
-
                     ),
                 ],
             )
@@ -114,16 +110,6 @@ def main(page: ft.Page, route="/relatorio_1"):
 
                         outra_comorbidades,
                         af,
-                        medicamentos_uso,
-                        queda_12meses,
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(queda_sim_nao)]),
-                            ft.Column(
-                                [ft.Container(quantas_quedas, width=200)])
-                        ]),
-
                         ft.Container(texto_inspecao, padding=5, ),
 
                         ft.Row([
@@ -166,12 +152,7 @@ def main(page: ft.Page, route="/relatorio_1"):
 
                         ft.Container(texto_adm, padding=5, ),
 
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(preservada)]),
-                            ft.Column(
-                                [ft.Container(ilimitada)])
-                        ]),
+                        ft.Container(adm_valor),
                         movimento_adm,
 
                         ft.Container(texto_reflexos, padding=5),
@@ -313,170 +294,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
-        if page.route == "/relatorio_2":
-            page.views.append(
-                ft.View(
-                    "/relatorio_2",
-                    scroll=ft.ScrollMode.AUTO,
-                    controls=[
-                        menu_topo,
-                        texto_relatorio2,
-                        ft.Container(numero_prontuario, padding=3),
-                        nome_paciente,
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(idade_paciente, width=140)]),
-                            ft.Column([ft.Container(sexo_paciente)])]
-                        ),
-                        telefone_paciente,
-                        profissao_paciente,
-                        endereco_paciente,
-                        diagnostico_paciente,
-                        ft.Container(texto_anamnese, padding=5, ),
-                        HDA_anamnese,
-                        ft.Container(texto_sinais_vitais, padding=5, ),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(pa, width=170, ),
-                                 ft.Container(fc, width=170, )]),
-                            ft.Column(
-                                [ft.Container(fr, width=170, ), ft.Container(sp02, width=170, )])]),
-                        qp,
-                        ft.Container(texto_comorbidades, padding=5, ),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(has, ), ft.Container(dm, ), ]),
-                            ft.Column(
-                                [ft.Container(cardiopatia)])]),
-                        ft.Container(outra_comorbidades),
-                        af,
-                        medicamentos_uso,
-                        queda_12meses,
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(sim_queda)]),
-                            ft.Column(
-                                [ft.Container(nao_queda)]),
-                            ft.Column(
-                                [ft.Container(quantas_quedas, width=200)])]),
-                        ft.Container(texto_nivel_consciencia, padding=5, ),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(lucido_orientado), ft.Container(desorientado)]),
-                            ft.Column(
-                                [ft.Container(lucido_desorientacao), ft.Container(inconsciente)]), ]),
-                        ft.Container(texto_emocional, padding=5, ),
 
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(calmo), ft.Container(agitado)]),
-                            ft.Column(
-                                [ft.Container(depressivo), ft.Container(ansioso)]),
-                            ft.Column(
-                                [ft.Container(agressivo), ]), ]),
-                        ft.Container(texto_inspecao, padding=5, ),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(hidratado), ft.Container(andador), ft.Container(cicatriz),
-                                 ft.Container(locomocao_independente), ft.Container(nao_colaborativo),
-                                 ft.Container(hematoma),
-                                 ft.Container(rubor), ]),
-                            ft.Column(
-                                [ft.Container(muletas), ft.Container(cadeira_rodas), ft.Container(calor),
-                                 ft.Container(colaborativo),
-                                 ft.Container(corado), ft.Container(edema), ft.Container(escara)]
-                            )
-                        ]),
-                        local_escara,
-                        ft.Container(texto_palpacao, padding=5, ),
-                        ft.Container(texto_trofismo, padding=5, ),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(atrofia), ft.Container(hipertrofia), ]),
-                            ft.Column(
-                                [ft.Container(hipotrofia), ft.Container(normotrofia)])]),
-                        local_trofismo,
-                        ft.Container(texto_tonus, padding=5, ),
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(atonia),
-                                 ft.Container(hipotonia),
-                                 ft.Container(normotonia), ]),
-                            ft.Column(
-                                [ft.Container(hipertonia), ft.Container(hipertonia_plastica),
-                                 ft.Container(hipertonia_elastica), ])]),
-
-                        ft.Container(texto_intensidade, padding=5, ),
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(intensidade_pequena), ft.Container(intensidade_media), ]),
-                            ft.Column(
-                                [ft.Container(intensidade_grande), ])]),
-
-                        ft.Container(texto_adm, padding=5, ),
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(preservada), ]),
-                            ft.Column(
-                                [ft.Container(ilimitada)])]),
-                        movimento_adm,
-                        ft.Container(texto_forca, padding=5, ),
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(normal), ]),
-                            ft.Column(
-                                [ft.Container(reduzida)])]),
-                        movimento_forca,
-                        ft.Container(texto_atividades_funcionais),
-                        ft.Container(ddp),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(quatro_apoios), ft.Container(quatro_ajoelhado),
-                                 ft.Container(semi_ajoelhado), ft.Container(arrastar_cruzado)])]),
-
-                        ft.Container(dle),
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(sentado), ft.Container(ajoelhado), ft.Container(rolar),
-                                 ft.Container(arrastar)])]),
-
-                        ft.Container(texto_coordenacao),
-
-                        ft.Row([
-                            ft.Column(
-                                [ft.Container(index_index)]),
-                            ft.Column(
-                                [ft.Container(index_nariz)]),
-                        ]),
-                        ft.Container(calcanhar_joelho, alignment=ft.alignment.center),
-
-                        ft.Container(texto_equilibrio, padding=5),
-                        ft.Container(texto_tronco, padding=5),
-                        tronco,
-                        pes,
-                        ft.Container(texto_avd, padding=5),
-                        avd,
-                        ft.Container(texto_testes_funcionais, padding=5),
-                        testes_funcionas,
-                        ft.Container(texto_testes_funcionais, padding=5),
-                        testes_funcionas,
-                        ft.Container(texto_avaliacao_marcha, padding=5),
-                        avaliacao_marcha,
-                        ft.Container(texto_observacoes, padding=5),
-                        observacoes,
-
-                        ft.Container(
-                            btn_enviar,
-                            alignment=ft.alignment.center
-                        )
-                    ],
-                )
-            ),
-        page.update()
         if page.route == "/professor_login":
             page.views.append(
                 ft.View(
@@ -533,10 +351,12 @@ def main(page: ft.Page, route="/relatorio_1"):
                             ]),
                             ft.Column([
                                 pesquisa_prof_button
+                                #lv
                             ]),
                         ]),
                         ft.Container(
-                            c1,
+                            #c1,
+                            lv,
                             border=ft.border.all(1),
 
                         ),
@@ -544,6 +364,134 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
+
+    dados = {
+        'nome': 'nome_paciente.value',
+        'idade': 'idade_paciente.value',
+        'sexo': 'sexo_paciente.value',
+        'cidade': 'endereco_paciente.value',
+        'telefone': 'telefone_paciente.value',
+        'email': 'email',
+        'anamnese': {
+            'HDA': 'hda_anamnese.value',
+            'Sinais Vitais': {
+                'PA': 'pa.value',
+                'FC': 'fc.value',
+                'FR': 'fr.value',
+                'SPO2': 'sp02.value',
+                'QP': 'qp.value'
+            },
+            'Comorbidade': {
+                'HAS': 'has.value',
+                'DM': 'dm.value',
+                'Cardiopatia': 'cardiopatia.valeu',
+                'Outra': 'outra_comorbidades.value'
+            },
+            'AF': 'af.value'
+        },
+        'Inspeção': {
+            'locomoção Independente': 'locomocao_independente.value',
+            'Muleta': 'muletas.value',
+            'Andador': 'andador.value',
+            'Cadeira de Rodas': 'cadeira_rodas.value',
+            'Cicatriz': 'cicatriz.value',
+            'Escara Local': 'escara.value',
+            'Colaborativo': 'colaborativo.value',
+            'Não Colaborativo': 'nao_colaborativo.value',
+            'Hidratado': 'hidratado.value',
+            'Corado': 'corado.value',
+            'Hematoma': 'hematoma.value',
+            'Edema': 'edema.value',
+            'Calor': 'calor.value',
+            'Rubor': 'rubor.value'
+        },
+        'Palpação': {
+            'Trofismo': {
+                'Tipo': 'atrofia.value || hipertrofia.value || normotrofia.value',
+                'Local': 'local_trofismo.value'
+            },  # FIM TROFISMO
+            'Tônus': {
+                'Tipo': 'atonia.value || hipotonia.value || normotonia.value || normotonia.value',
+                'Normotonia': 'hipertonia_plastica.value || hipertonia_elastica.value'  # NORMOTONIA VAI NO TIPO, MAS EXISTE ESSES DOIS TIPOS
+            },  # FIM TONUS
+            'Intensidade da Hipertonia': 'intensidade_hipertonia.value'
+        },  # FIM PALPAÇÃO
+        'ADM': {
+            'Assegurada?': 'Preservado || Limitado',
+            'Movimento': 'movimento_adm.value'
+        },  # FIM ADM
+        'Reflexos': {
+            'Reflexos Profundo': {
+                'Direito': {
+                    'Bicipatal': 'bicipital_direito.value',
+                    'Triciptal': 'tricipital_direito.value',
+                    'Cúbitopronador': 'cubitopronador_direito.value',
+                    'Patelar': 'patelar_direito.value',
+                    'Aquileu': 'aquileu_direito.value',
+                    'Adutor': 'adutor_direito.value'
+                },  # FIM REFLEXOS PROFUNDOS DIREITO
+                'Esquerdo': {
+                    'Bicipatal': 'bicipital_esquerdo.value',
+                    'Triciptal': 'tricipital_esquerdo.value',
+                    'Cúbitopronador': 'cubitopronador_esquerdo.value',
+                    'Patelar': 'patelar_esquerdo.value',
+                    'Aquileu': 'aquileu_esquerdo.value',
+                    'Adutor': 'adutor_esquerdo.value'
+                }  # FIM REFLEXOS PROFUNDOS ESQUERDO
+            },  # FIM REFLEXOS PROFUNDOS
+            'Reflexos Superficiasi': {
+                'Direito': {
+                    'Cutaneo Planar': 'Presente(presente_radiobutton_direito_plantar.value) || ausente_checkbox_direito_plantar.value',
+                    'Cutaneo Abdominal': 'presente_checkbox_abdominal_direito.value || ausente_checkbox_abdominal_direito.value'
+                },  # FIM REFLEXOS SUPERFICIAIS DIREITO
+                'Esquerdo': {
+                    'Cutaneo Planar': 'Presente(presente_radiobutton_esquerdo_plantar.value) || ausente_checkbox_esquerdo_plantar.value',
+                    'Cutaneo Abdominal': 'presente_checkbox_abdominal_esquerdo.value || ausente_checkbox_abdominal_esquerdo.value'
+                }  # FIM REFLEXOS SUPERFICIAIS ESQUERDO
+            }  # FIM REFLEXOS SUPERFICIAIS
+        },  # FIM REFLEXOS
+        'Motricidade Involuntaria': {
+            'Movimentos Coreicos': 'movimentos_coreicos.value',
+            'Movimentos Aleatorios': 'movimentos_atetoicos.value',
+            'Balismo': 'balismo.value',
+            'Distonia': 'distonia.value',
+            'Câimbras': 'caimbras.value',
+            'Convulsoes': 'convulsoes.value',
+            'Miocionia': 'miocionia.value',
+            'Soluços': 'solucos.value',
+            'Espasmos': 'espasmos.value',
+            'Faciculações(Micimias)': 'fasciculacoes.value',
+            'Tremores': 'tremores.value',
+            'Tiques': 'tiques.value'
+        },  # FIM MOTRICIDADE INVOLUNTARIA
+        'Atividades Funcionais': {
+            'D.D p/ D.L.E : D.D p/ D.L.D': 'ddp.value',
+            'D.L.E p/ D.V : D.L.D p/ D.V': 'dle.value',
+            '4 apoios': 'quatro_apoios.value',
+            '4 apoios p/ ajoelhado': 'quatro_ajoelhado.value',
+            'Semi ajoelhado /p de pe': 'semi_ajoelhado.value',
+            'Arastar Cruzado': 'arrastar_cruzado.value',
+            'Sentado': 'sentado.value',
+            'Ajoelhado p/ semi ajoelhado': 'ajoelhado.value',
+            'Rolar': 'rolar.value',
+            'Arastar Homolateral': 'arrastar.value'
+        },  # FIM ATIVIDADES FUNCIONAIS
+        'Coordenação': {
+            'index-index': 'index_index.value',
+            'index-nariz': 'index_nariz.value',
+            'calcanhar-joelho': 'calcanhar_joelho.value'
+        },  # FIM COORDENAÇÃO
+        'Equilibrio': {
+            'Tronco': 'tronco.value',
+            'Romberg': 'romber.value',
+            'Romberg Sensibilizado': 'romberg_sensibilizado.value'
+        },  # FIM EQUILIBRIO
+        "AVD's": 'avd.value',
+        'Testes Funcionais': {
+            'TUG': 'testes_funcionas.value'
+        },  # FIM TESTES FUNCIONAIS
+        'Avalialção Marcha': 'avaliacao_marcha.value'
+    }  # FIM FICHA
 
     # duas funções para a caixa de dialogo no final do código, quando o cliente aperta enviar relatorio
     def open_dlg(e):
@@ -574,6 +522,7 @@ def main(page: ft.Page, route="/relatorio_1"):
 
     def teste():
         print(nome_paciente.value)
+        print(has.value)
 
     def login_prof():
         if usuario.value == "adm" and senha.value == "123":
@@ -639,7 +588,6 @@ def main(page: ft.Page, route="/relatorio_1"):
     nome_paciente = ft.TextField(
         label="Nome do paciente",
         max_length=60,
-        input_filter=ft.TextOnlyInputFilter(),
 
     )
     idade_paciente = ft.TextField(
@@ -662,7 +610,6 @@ def main(page: ft.Page, route="/relatorio_1"):
     )
     profissao_paciente = ft.TextField(
         label="Profissao do paciente",
-        input_filter=ft.TextOnlyInputFilter()
     )
     endereco_paciente = ft.TextField(
         label="Endereço do paciente"
@@ -727,23 +674,6 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="Medicamentos em uso:",
         multiline="true",
     )
-    queda_12meses = ft.Text(
-        "Queda nos últimos 12 meses?",
-        size=20,
-        weight=ft.FontWeight.BOLD,
-    )
-    queda_sim_nao = ft.Dropdown(
-        label="Sim ou não",
-        width=150,
-        options=[
-            ft.dropdown.Option("Sim", "Sim"),
-            ft.dropdown.Option("Não", "Não")
-        ]
-    )
-    quantas_quedas = ft.TextField(
-        label="Quantas?"
-    )
-
     # Aqui começa "II" de Inspeção
     texto_inspecao = ft.Text(
         "II-Inspeção",
@@ -860,11 +790,11 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-    preservada = ft.Checkbox(
-        label="Preservada", value=False
-    )
-    ilimitada = ft.Checkbox(
-        label="Ilimitada", value=False
+    adm_valor = ft.RadioGroup(content=ft.Column([ft.Row([
+        ft.Column([ft.Radio(value="Preservada", label="Preservada")]),
+        ft.Column([ft.Radio(value="Ilimitada", label="Ilimitada")])
+    ])
+    ])
     )
     movimento_adm = ft.TextField(
         label="Movimento:"
@@ -1346,90 +1276,6 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Parkinsoniana", "Parkinsoniana"),
             ft.dropdown.Option("Anserina", "Anserina"),
             ft.dropdown.Option("Em tesoura", "Em tesoura")
-        ]
-    )
-    nao_queda = ft.Checkbox(
-        label="Não", value=False
-    )
-    sim_queda = ft.Checkbox(
-        label="Sim", value=False
-    )
-    quantas_quedas = ft.TextField(
-        label="Quantas?"
-    )
-    texto_nivel_consciencia = ft.Text(
-        "II-Nível de Consciência",
-        size=25,
-        weight=ft.FontWeight.BOLD,
-    )
-    lucido_orientado = ft.Checkbox(
-        label="Lúcido-orientado", value=False
-    )
-    lucido_desorientacao = ft.Checkbox(
-        label="Lúcido com desorientação", value=False
-    )
-    desorientado = ft.Checkbox(
-        label="Desorientado", value=False
-    )
-    inconsciente = ft.Checkbox(
-        label="Inconsciente", value=False
-    )
-    texto_emocional = ft.Text(
-        "III-Estado emocional",
-        size=25,
-        weight=ft.FontWeight.BOLD,
-    )
-    calmo = ft.Checkbox(
-        label="Calmo", value=False
-    )
-    agitado = ft.Checkbox(
-        label="Agitado", value=False
-    )
-    ansioso = ft.Checkbox(
-        label="Ansioso", value=False
-    )
-    depressivo = ft.Checkbox(
-        label="Depressivo", value=False
-    )
-    agressivo = ft.Checkbox(
-        label="Agressivo", value=False
-    )
-    texto_intensidade = ft.Text(
-        "Intensidade da hipertonia:",
-        size=20,
-        weight=ft.FontWeight.BOLD,
-    )
-    intensidade_pequena = ft.Checkbox(
-        label="Pequena", value=False
-    )
-    intensidade_media = ft.Checkbox(
-        label="Média", value=False
-    )
-    intensidade_grande = ft.Checkbox(
-        label="Grande", value=False
-    )
-    texto_forca = ft.Text(
-        "V-Força",
-        size=25,
-        weight=ft.FontWeight.BOLD,
-    )
-    normal = ft.Checkbox(
-        label="Normal", value=False
-    )
-    reduzida = ft.Checkbox(
-        label="Reduzida", value=False
-    )
-    movimento_forca = ft.TextField(
-        label="Movimento:"
-    )
-    pes = ft.Dropdown(
-        label="",
-        options=[
-            ft.dropdown.Option("Pés juntos", "Pés juntos"),
-            ft.dropdown.Option("Pés separados", "Pés separados"),
-            ft.dropdown.Option("Semi tandem", "Semi tandem"),
-            ft.dropdown.Option("Tandem", "Tandem"),
-            ft.dropdown.Option("Equilíbrio unipodal", "Equilíbrio unipodal")
         ]
     )
     texto_observacoes = ft.Text(
