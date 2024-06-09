@@ -4,27 +4,29 @@ import json
 import requests
 from datetime import date
 
+#link para o bd firebase
 link = 'https://teste-dbd-default-rtdb.firebaseio.com/'
 
+#Inicio da função main page que gera a interface
 def main(page: ft.Page, route="/relatorio_1"):
     page.title = "Relatorio Fisioterapia"
     page.window_width = 400
     page.theme_mode = ft.ThemeMode.LIGHT
     page.scroll = "adaptive"
 
+    #Função para fazer a listview dentro da tela professor
     lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-
     count = 1
-
     for i in range(0, 60):
         lv.controls.append(ft.TextButton(f"Line {count}"))
         count += 1
 
-    # TESTE TROCA DE TELAS!!!!!!!!!
+    #TROCA DE TELAS
     def route_change(route):
         page.views.clear()
         page.views.append(
             ft.View(
+                #Tela inicial menu botões
                 "/",
                 [
                     menu_topo,
@@ -62,7 +64,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 ],
             )
         )
-        #AQUI É A PARTE ONDE EU ADICIONO NA TELA A FICHA
+        #Tela da ficha
         if page.route == "/relatorio_1":
             page.views.append(
                 ft.View(
@@ -160,35 +162,21 @@ def main(page: ft.Page, route="/relatorio_1"):
                         ft.Container(texto_reflexos_profundos),
 
                         ft.Container(texto_direito),
-                        ft.Container(texto_direito_bicipital),
                         ft.Container(bicipital_direito),
-                        ft.Container(texto_direito_tricciptal),
                         ft.Container(tricipital_direito),
-                        ft.Container(texto_direito_estilorradial),
                         ft.Container(estilorradial_direito),
-                        ft.Container(texto_direito_cubitopronador),
                         ft.Container(cubitopronador_direito),
-                        ft.Container(texto_direito_patelar),
                         ft.Container(patelar_direito),
-                        ft.Container(texto_direito_aquileu),
                         ft.Container(aquileu_direito),
-                        ft.Container(texto_direito_adutor),
                         ft.Container(adutor_direito),
 
                         ft.Container(texto_esquerdo, ),
-                        ft.Container(texto_esquerdo_bicipital),
                         ft.Container(bicipital_esquerdo),
-                        ft.Container(texto_esquerdo_tricciptal),
                         ft.Container(tricipital_esquerdo),
-                        ft.Container(texto_esquerdo_estilorradial),
                         ft.Container(estilorradial_esquerdo),
-                        ft.Container(texto_esquerdo_cubitopronador),
                         ft.Container(cubitopronador_esquerdo),
-                        ft.Container(texto_esquerdo_patelar),
                         ft.Container(patelar_esquerdo),
-                        ft.Container(texto_esquerdo_aquileu),
                         ft.Container(aquileu_esquerdo),
-                        ft.Container(texto_esquerdo_adutor),
                         ft.Container(adutor_esquerdo),
 
                         ft.Container(texto_reflexos_superficiais, padding=5),
@@ -294,7 +282,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
-
+        #Tela do professor login
         if page.route == "/professor_login":
             page.views.append(
                 ft.View(
@@ -337,6 +325,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
+        #tela professor normal
         if page.route == "/professor":
             page.views.append(
                 ft.View(
@@ -364,7 +353,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
-
+    #DICIONARIO SALVO PARA ENVIAR OS DADOS AO BD
     dados = {
         'nome': 'nome_paciente.value',
         'idade': 'idade_paciente.value',
@@ -524,13 +513,14 @@ def main(page: ft.Page, route="/relatorio_1"):
         print(nome_paciente.value)
         print(has.value)
 
+    #Função do login do prof, onde pode mudar a senha e login
     def login_prof():
         if usuario.value == "adm" and senha.value == "123":
             page.go("/professor")
         else:
             page.go("/")
 
-
+    #variaveis para a tela de login do prof
     usuario = ft.TextField(label="Usuário", width=330)
     senha = ft.TextField(label="Senha", width=330, password=True)
     pesquisa_prof = ft.TextField(label="INSIRA AQUI")
@@ -545,7 +535,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.TextButton(text="teste")
         ]
     )
-
+    #BOtão Enviar da tela da ficha ATENçÃO PARA A FUNçÂO DO ON_CLICK
     btn_enviar = ft.ElevatedButton(
         content=ft.Text("Enviar relatório", color="BLACK"),
         adaptive=True,
@@ -556,6 +546,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             shape=ft.RoundedRectangleBorder(radius=5),
         ),
     )
+    #BOTÃO LOGIN DO PROF
     btn_login = ft.ElevatedButton(
         content=ft.Text("Entrar", color="BLACK"),
         adaptive=True,
@@ -571,11 +562,6 @@ def main(page: ft.Page, route="/relatorio_1"):
     # Todas as variaveis com "texto_" no nome, são textos que indicam algo no app
     texto_relatorio = ft.Text(
         "Avaliação Neurofuncional",
-        size=25,
-        weight=ft.FontWeight.BOLD,
-    )
-    texto_relatorio2 = ft.Text(
-        "Avaliação Geriátrica",
         size=25,
         weight=ft.FontWeight.BOLD,
     )
@@ -723,7 +709,7 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="Escara", value=False
     )
     local_escara = ft.TextField(
-        label="Local:"
+        label="Local escara:"
     )
 
     # Aqui começa "III" de palpação
@@ -820,84 +806,53 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-    texto_direito_bicipital = ft.Text(
-        "Bicipital",
-        size=15,
-        weight=ft.FontWeight.BOLD,
-    )
     bicipital_direito = ft.Dropdown(
-        label="",
+        label="Bicipital",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_direito_tricciptal = ft.Text(
-        "Triciptal",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     tricipital_direito = ft.Dropdown(
-        label="",
+        label="Tricipital",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-
-    texto_direito_estilorradial = ft.Text(
-        "Estilorradial",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     estilorradial_direito = ft.Dropdown(
-        label="",
+        label="Estilorradial",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_direito_cubitopronador = ft.Text(
-        "Cúbitopronador",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     cubitopronador_direito = ft.Dropdown(
-        label="",
+        label="Cúbitopronador",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_direito_patelar = ft.Text(
-        "Patelar",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     patelar_direito = ft.Dropdown(
-        label="",
+        label="Patelar",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_direito_aquileu = ft.Text(
-        "Aquileu",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     aquileu_direito = ft.Dropdown(
-        label="",
+        label="Aquileu",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -905,13 +860,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
-    texto_direito_adutor = ft.Text(
-        "Adutor",
-        size=15,
-        weight=ft.FontWeight.BOLD,
-    )
     adutor_direito = ft.Dropdown(
-        label="",
+        label="Adutor",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -926,98 +876,62 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-    texto_esquerdo_bicipital = ft.Text(
-        "Bicipital",
-        size=15,
-        weight=ft.FontWeight.BOLD,
-    )
     bicipital_esquerdo = ft.Dropdown(
-        label="",
+        label="Bicipital",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_esquerdo_tricciptal = ft.Text(
-        "Tricciptal",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     tricipital_esquerdo = ft.Dropdown(
-        label="",
+        label="Tricipital",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-
-    texto_esquerdo_estilorradial = ft.Text(
-        "Estilorradial",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     estilorradial_esquerdo = ft.Dropdown(
-        label="",
+        label="Estilorradial",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_esquerdo_cubitopronador = ft.Text(
-        "Cúbitopronador",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     cubitopronador_esquerdo = ft.Dropdown(
-        label="",
+        label="Cúbitopronador",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_esquerdo_patelar = ft.Text(
-        "Patelar",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     patelar_esquerdo = ft.Dropdown(
-        label="",
+        label="Patelar",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_esquerdo_aquileu = ft.Text(
-        "Aquileu",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     aquileu_esquerdo = ft.Dropdown(
-        label="",
+        label="Aquileu",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
             ft.dropdown.Option("Hipo", "Hipo"),
             ft.dropdown.Option("Normo", "Normo")
         ]
-    )
-    texto_esquerdo_adutor = ft.Text(
-        "Adutor",
-        size=15,
-        weight=ft.FontWeight.BOLD,
     )
     adutor_esquerdo = ft.Dropdown(
-        label="",
+        label="Adutor",
         options=[
             ft.dropdown.Option("Ausente", "Ausente"),
             ft.dropdown.Option("Hiper", "Hiper"),
@@ -1025,7 +939,6 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
-
     # Aqui é a parte dos reflexos superficiais
     texto_reflexos_superficiais = ft.Text(
         "Reflexos superficiais",
@@ -1136,34 +1049,34 @@ def main(page: ft.Page, route="/relatorio_1"):
         weight=ft.FontWeight.BOLD,
     )
     ddp = ft.Checkbox(
-        label="D.D p/ D.L.E.: D.D p/ D.L.D", tristate=True
+        label="D.D p/ D.L.E.: D.D p/ D.L.D"
     )
     quatro_apoios = ft.Checkbox(
-        label="4 apoios", tristate=True
+        label="4 apoios"
     )
     quatro_ajoelhado = ft.Checkbox(
-        label="4 apoios p/ajoelhado", tristate=True
+        label="4 apoios p/ajoelhado"
     )
     semi_ajoelhado = ft.Checkbox(
-        label="Semi ajoelhado p/ de pé", tristate=True
+        label="Semi ajoelhado p/ de pé"
     )
     arrastar_cruzado = ft.Checkbox(
-        label="Arrastar cruzado", tristate=True
+        label="Arrastar cruzado"
     )
     dle = ft.Checkbox(
-        label="D.L.E. p/ D.V.: D.L.D. p/ D.V", tristate=True
+        label="D.L.E. p/ D.V.: D.L.D. p/ D.V"
     )
     sentado = ft.Checkbox(
-        label="Sentado", tristate=True
+        label="Sentado"
     )
     ajoelhado = ft.Checkbox(
-        label="Ajoelhado p/semi ajoelhado", tristate=True
+        label="Ajoelhado p/semi ajoelhado"
     )
     rolar = ft.Checkbox(
-        label="Rolar", tristate=True
+        label="Rolar"
     )
     arrastar = ft.Checkbox(
-        label="Arrastar homolateral", tristate=True
+        label="Arrastar homolateral"
     )
     texto_coordenacao = ft.Text(
         "VIII-Coordenação(presente ou ausente)",
@@ -1288,5 +1201,5 @@ def main(page: ft.Page, route="/relatorio_1"):
         multiline="true",
         max_length=500
     )
-
+#Fim do código =D
 ft.app(target=main, view=ft.AppView.FLET_APP)
