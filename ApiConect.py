@@ -10,6 +10,8 @@ dados = {
     'nome':'nome do paciente aq',
     'idade':'idade do paciente aq',
     'sexo':'sexo do paciente aq',
+    'dataNascimento':'data de nascimento do paciente aq',
+    'dataAtendimento':date.today(),
     'cidade':'cidade do paciente aq',
     'telefone':'telefone do paciente aq',
     'email':'email do paciente aq',
@@ -52,8 +54,7 @@ dados = {
             'Local':'Local do trofismo'
         },#FIM TROFISMO
         'Tônus':{
-            'Tipo':'atonia || hipotonia || normotonia || normotonia',
-            'Normotonia':'Plastica || Elastica' #NORMOTONIA VAI NO TIPO, MAS EXISTE ESSES DOIS TIPOS
+            'Tipo':'atonia || hipotonia || normotonia Plastica || normotonia Elastica'
         },#FIM TONUS
         'Intensidade da Hipertonia':'Pequena || Media || Grande'
         },#FIM PALPAÇÃO
@@ -134,8 +135,33 @@ dados = {
         'Avalialção Marcha':'Normal || Ataxia || Escarvante || Parksoniana || Arserina || Em tesoura'
     }#FIM FICHA
 
-def Insert(link):
+#botao
 
-    def macacasasaso(nome):
-        print(nome)
+def Insert(link:str , dados:dict):
+    requisicao = requests.post(f'{link}/Prontuarios/.json', data=json.dumps(dados))
 
+    print(requisicao)
+
+def Search(link:str):
+    requisicao = requests.get(f'{link}/Prontuarios/.json')
+
+    select = str(input('De qual paciente você gostaria de saber '))
+
+    dic_requisicao = requisicao.json()
+
+    dic_info = dic_requisicao.values()
+
+    try:
+        if select:
+            encontrar_paciente = map(lambda dic: dic if dic['nome'] == select else '', dic_info)
+            paciente = tuple(filter(lambda dic: dic != '', encontrar_paciente))
+            paciente_info = dict(paciente[0])
+            print(paciente_info)
+
+            select = str(input('Deseja saber oq do paciente: '))
+            print(paciente_info[f'{select}'])
+
+        else:
+            print(dic_info)
+    except Exception as e:
+        print('Algo deu errado ', e)
