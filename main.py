@@ -353,134 +353,10 @@ def main(page: ft.Page, route="/relatorio_1"):
                 )
             )
         page.update()
-    #DICIONARIO SALVO PARA ENVIAR OS DADOS AO BD
-    dados = {
-        'nome': 'nome_paciente.value',
-        'idade': 'idade_paciente.value',
-        'sexo': 'sexo_paciente.value',
-        'cidade': 'endereco_paciente.value',
-        'telefone': 'telefone_paciente.value',
-        'email': 'email',
-        'anamnese': {
-            'HDA': 'hda_anamnese.value',
-            'Sinais Vitais': {
-                'PA': 'pa.value',
-                'FC': 'fc.value',
-                'FR': 'fr.value',
-                'SPO2': 'sp02.value',
-                'QP': 'qp.value'
-            },
-            'Comorbidade': {
-                'HAS': 'has.value',
-                'DM': 'dm.value',
-                'Cardiopatia': 'cardiopatia.valeu',
-                'Outra': 'outra_comorbidades.value'
-            },
-            'AF': 'af.value'
-        },
-        'Inspeção': {
-            'locomoção Independente': 'locomocao_independente.value',
-            'Muleta': 'muletas.value',
-            'Andador': 'andador.value',
-            'Cadeira de Rodas': 'cadeira_rodas.value',
-            'Cicatriz': 'cicatriz.value',
-            'Escara Local': 'escara.value',
-            'Colaborativo': 'colaborativo.value',
-            'Não Colaborativo': 'nao_colaborativo.value',
-            'Hidratado': 'hidratado.value',
-            'Corado': 'corado.value',
-            'Hematoma': 'hematoma.value',
-            'Edema': 'edema.value',
-            'Calor': 'calor.value',
-            'Rubor': 'rubor.value'
-        },
-        'Palpação': {
-            'Trofismo': {
-                'Tipo': 'atrofia.value || hipertrofia.value || normotrofia.value',
-                'Local': 'local_trofismo.value'
-            },  # FIM TROFISMO
-            'Tônus': {
-                'Tipo': 'atonia.value || hipotonia.value || normotonia.value || normotonia.value',
-                'Normotonia': 'hipertonia_plastica.value || hipertonia_elastica.value'  # NORMOTONIA VAI NO TIPO, MAS EXISTE ESSES DOIS TIPOS
-            },  # FIM TONUS
-            'Intensidade da Hipertonia': 'intensidade_hipertonia.value'
-        },  # FIM PALPAÇÃO
-        'ADM': {
-            'Assegurada?': 'Preservado || Limitado',
-            'Movimento': 'movimento_adm.value'
-        },  # FIM ADM
-        'Reflexos': {
-            'Reflexos Profundo': {
-                'Direito': {
-                    'Bicipatal': 'bicipital_direito.value',
-                    'Triciptal': 'tricipital_direito.value',
-                    'Cúbitopronador': 'cubitopronador_direito.value',
-                    'Patelar': 'patelar_direito.value',
-                    'Aquileu': 'aquileu_direito.value',
-                    'Adutor': 'adutor_direito.value'
-                },  # FIM REFLEXOS PROFUNDOS DIREITO
-                'Esquerdo': {
-                    'Bicipatal': 'bicipital_esquerdo.value',
-                    'Triciptal': 'tricipital_esquerdo.value',
-                    'Cúbitopronador': 'cubitopronador_esquerdo.value',
-                    'Patelar': 'patelar_esquerdo.value',
-                    'Aquileu': 'aquileu_esquerdo.value',
-                    'Adutor': 'adutor_esquerdo.value'
-                }  # FIM REFLEXOS PROFUNDOS ESQUERDO
-            },  # FIM REFLEXOS PROFUNDOS
-            'Reflexos Superficiasi': {
-                'Direito': {
-                    'Cutaneo Planar': 'Presente(presente_radiobutton_direito_plantar.value) || ausente_checkbox_direito_plantar.value',
-                    'Cutaneo Abdominal': 'presente_checkbox_abdominal_direito.value || ausente_checkbox_abdominal_direito.value'
-                },  # FIM REFLEXOS SUPERFICIAIS DIREITO
-                'Esquerdo': {
-                    'Cutaneo Planar': 'Presente(presente_radiobutton_esquerdo_plantar.value) || ausente_checkbox_esquerdo_plantar.value',
-                    'Cutaneo Abdominal': 'presente_checkbox_abdominal_esquerdo.value || ausente_checkbox_abdominal_esquerdo.value'
-                }  # FIM REFLEXOS SUPERFICIAIS ESQUERDO
-            }  # FIM REFLEXOS SUPERFICIAIS
-        },  # FIM REFLEXOS
-        'Motricidade Involuntaria': {
-            'Movimentos Coreicos': 'movimentos_coreicos.value',
-            'Movimentos Aleatorios': 'movimentos_atetoicos.value',
-            'Balismo': 'balismo.value',
-            'Distonia': 'distonia.value',
-            'Câimbras': 'caimbras.value',
-            'Convulsoes': 'convulsoes.value',
-            'Miocionia': 'miocionia.value',
-            'Soluços': 'solucos.value',
-            'Espasmos': 'espasmos.value',
-            'Faciculações(Micimias)': 'fasciculacoes.value',
-            'Tremores': 'tremores.value',
-            'Tiques': 'tiques.value'
-        },  # FIM MOTRICIDADE INVOLUNTARIA
-        'Atividades Funcionais': {
-            'D.D p/ D.L.E : D.D p/ D.L.D': 'ddp.value',
-            'D.L.E p/ D.V : D.L.D p/ D.V': 'dle.value',
-            '4 apoios': 'quatro_apoios.value',
-            '4 apoios p/ ajoelhado': 'quatro_ajoelhado.value',
-            'Semi ajoelhado /p de pe': 'semi_ajoelhado.value',
-            'Arastar Cruzado': 'arrastar_cruzado.value',
-            'Sentado': 'sentado.value',
-            'Ajoelhado p/ semi ajoelhado': 'ajoelhado.value',
-            'Rolar': 'rolar.value',
-            'Arastar Homolateral': 'arrastar.value'
-        },  # FIM ATIVIDADES FUNCIONAIS
-        'Coordenação': {
-            'index-index': 'index_index.value',
-            'index-nariz': 'index_nariz.value',
-            'calcanhar-joelho': 'calcanhar_joelho.value'
-        },  # FIM COORDENAÇÃO
-        'Equilibrio': {
-            'Tronco': 'tronco.value',
-            'Romberg': 'romber.value',
-            'Romberg Sensibilizado': 'romberg_sensibilizado.value'
-        },  # FIM EQUILIBRIO
-        "AVD's": 'avd.value',
-        'Testes Funcionais': {
-            'TUG': 'testes_funcionas.value'
-        },  # FIM TESTES FUNCIONAIS
-        'Avalialção Marcha': 'avaliacao_marcha.value'
-    }  # FIM FICHA
+
+    def insert():
+        requisicao = requests.post(f'{link}/Prontuarios/.json',data=json.dumps(dados))
+        print(requisicao)
 
     # duas funções para a caixa de dialogo no final do código, quando o cliente aperta enviar relatorio
     def open_dlg(e):
@@ -540,7 +416,7 @@ def main(page: ft.Page, route="/relatorio_1"):
         content=ft.Text("Enviar relatório", color="BLACK"),
         adaptive=True,
         bgcolor="WHITE",
-        on_click=lambda _: teste(),
+        on_click=lambda _: insert,
         style=ft.ButtonStyle(
             padding=30,
             shape=ft.RoundedRectangleBorder(radius=5),
@@ -1201,5 +1077,136 @@ def main(page: ft.Page, route="/relatorio_1"):
         multiline="true",
         max_length=500
     )
+
+    #DICIONARIO SALVO PARA ENVIAR OS DADOS AO BD
+    dados = {
+        'nome': nome_paciente.value,
+        'idade': idade_paciente.value,
+        'sexo': sexo_paciente.value,
+        'cidade': endereco_paciente.value,
+        'telefone': telefone_paciente.value,
+        'email': False,
+        'anamnese': {
+            'HDA': HDA_anamnese.value,
+            'Sinais Vitais': {
+                'PA': pa.value,
+                'FC': fc.value,
+                'FR': fr.value,
+                'SPO2': sp02.value,
+                'QP': qp.value
+            },
+            'Comorbidade': {
+                'HAS': has.value,
+                'DM': dm.value,
+                'Cardiopatia': cardiopatia.value,
+                'Outra': outra_comorbidades.value
+            },
+            'AF': af.value
+        },
+        'Inspeção': {
+            'locomoção Independente': locomocao_independente.value,
+            'Muleta': muletas.value,
+            'Andador': andador.value,
+            'Cadeira de Rodas': cadeira_rodas.value,
+            'Cicatriz': cicatriz.value,
+            'Escara Local': escara.value,
+            'Colaborativo': colaborativo.value,
+            'Não Colaborativo': nao_colaborativo.value,
+            'Hidratado': hidratado.value,
+            'Corado': corado.value,
+            'Hematoma': hematoma.value,
+            'Edema': edema.value,
+            'Calor': calor.value,
+            'Rubor': rubor.value
+        },
+        'Palpação': {
+            'Trofismo': {
+                'Tipo': atrofia.value, #|| hipertrofia.value || normotrofia.value, ALTERAR DEPOIS
+                'Local': local_trofismo.value
+            },  # FIM TROFISMO
+            'Tônus': {
+                'Tipo': atonia.value, #|| hipotonia.value || normotonia.value || normotonia.value, ALTERAR DEPOIS
+                'Normotonia': hipertonia_plastica.value #|| hipertonia_elastica.value  # NORMOTONIA VAI NO TIPO, MAS EXISTE ESSES DOIS TIPOS
+            },  # FIM TONUS
+            'Intensidade da Hipertonia': intensidade_hipertonia.value
+        },  # FIM PALPAÇÃO
+        'ADM': {
+            'Assegurada?': adm_valor,
+            'Movimento': 'movimento_adm.value'
+        },  # FIM ADM
+        'Reflexos': {
+            'Reflexos Profundo': {
+                'Direito': {
+                    'Bicipatal': bicipital_direito.value,
+                    'Triciptal': tricipital_direito.value,
+                    'Cúbitopronador': cubitopronador_direito.value,
+                    'Patelar': patelar_direito.value,
+                    'Aquileu': aquileu_direito.value,
+                    'Adutor': adutor_direito.value
+                },  # FIM REFLEXOS PROFUNDOS DIREITO
+                'Esquerdo': {
+                    'Bicipatal': bicipital_esquerdo.value,
+                    'Triciptal': tricipital_esquerdo.value,
+                    'Cúbitopronador': cubitopronador_esquerdo.value,
+                    'Patelar': patelar_esquerdo.value,
+                    'Aquileu': aquileu_esquerdo.value,
+                    'Adutor': adutor_esquerdo.value
+                }  # FIM REFLEXOS PROFUNDOS ESQUERDO
+            },  # FIM REFLEXOS PROFUNDOS
+            'Reflexos Superficiasi': {
+                'Direito': {
+                    'Cutaneo Planar': False,        #'Presente(presente_radiobutton_direito_plantar.value) || ausente_checkbox_direito_plantar.value',
+                    'Cutaneo Abdominal': False          #'presente_checkbox_abdominal_direito.value || ausente_checkbox_abdominal_direito.value'
+                },  # FIM REFLEXOS SUPERFICIAIS DIREITO
+                'Esquerdo': {
+                    'Cutaneo Planar': False  ,               #'Presente(presente_radiobutton_esquerdo_plantar.value) || ausente_checkbox_esquerdo_plantar.value',
+                    'Cutaneo Abdominal': False                   #'presente_checkbox_abdominal_esquerdo.value || ausente_checkbox_abdominal_esquerdo.value'
+                }  # FIM REFLEXOS SUPERFICIAIS ESQUERDO
+            }  # FIM REFLEXOS SUPERFICIAIS
+        },  # FIM REFLEXOS
+        'Motricidade Involuntaria': {
+            'Movimentos Coreicos': movimentos_coreicos.value,
+            'Movimentos Aleatorios': movimentos_atetoicos.value,
+            'Balismo': balismo.value,
+            'Distonia': distonia.value,
+            'Câimbras': caimbras.value,
+            'Convulsoes': convulsoes.value,
+            'Miocionia': miocionia.value,
+            'Soluços': solucos.value,
+            'Espasmos': espasmos.value,
+            'Faciculações(Micimias)': fasciculacoes.value,
+            'Tremores': tremores.value,
+            'Tiques': tiques.value
+        },  # FIM MOTRICIDADE INVOLUNTARIA
+        'Atividades Funcionais': {
+            'D.D p/ D.L.E : D.D p/ D.L.D': ddp.value,
+            'D.L.E p/ D.V : D.L.D p/ D.V': dle.value,
+            '4 apoios': quatro_apoios.value,
+            '4 apoios p/ ajoelhado': quatro_ajoelhado.value,
+            'Semi ajoelhado /p de pe': semi_ajoelhado.value,
+            'Arastar Cruzado': arrastar_cruzado.value,
+            'Sentado': sentado.value,
+            'Ajoelhado p/ semi ajoelhado': ajoelhado.value,
+            'Rolar': rolar.value,
+            'Arastar Homolateral': arrastar.value
+        },  # FIM ATIVIDADES FUNCIONAIS
+        'Coordenação': {
+            'index-index': index_index.value,
+            'index-nariz': index_nariz.value,
+            'calcanhar-joelho': calcanhar_joelho.value
+        },  # FIM COORDENAÇÃO
+        'Equilibrio': {
+            'Tronco': tronco.value,
+            'Romberg': romberg.value,
+            'Romberg Sensibilizado': romberg_sensibilizado.value
+        },  # FIM EQUILIBRIO
+        "AVD's": avd.value,
+        'Testes Funcionais': {
+            'TUG': testes_funcionas.value
+        },  # FIM TESTES FUNCIONAIS
+        'Avalialção Marcha': avaliacao_marcha.value
+    }  # FIM FICHA
+
+
 #Fim do código =D
 ft.app(target=main, view=ft.AppView.FLET_APP)
