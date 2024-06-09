@@ -154,7 +154,12 @@ def main(page: ft.Page, route="/relatorio_1"):
 
                         ft.Container(texto_adm, padding=5, ),
 
-                        ft.Container(adm_valor),
+                        ft.Row([
+                            ft.Column(
+                                [ft.Container(adm_preservada),]),
+                            ft.Column(
+                                [ft.Container(adm_ilimitada),])
+                        ]),
                         movimento_adm,
 
                         ft.Container(texto_reflexos, padding=5),
@@ -187,7 +192,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                                 [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
                             ),
                             ft.Column(
-                                [ft.Container(texto_presente), ft.Container(presente_radiobutton_direito_plantar),
+                                [ft.Container(texto_presente), ft.Container(presente_direito_plantar),
                                  ft.Container(presente_checkbox_abdominal_direito)]
                             ),
                             ft.Column(
@@ -203,7 +208,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                                 [ft.Container(ft.Text("")), ft.Container(texto_plantar), ft.Container(texto_abdominal)]
                             ),
                             ft.Column(
-                                [ft.Container(texto_presente), ft.Container(presente_radiobutton_esquerdo_plantar),
+                                [ft.Container(texto_presente), ft.Container(presente_esquerdo_plantar),
                                  ft.Container(presente_checkbox_abdominal_esquerdo)]
                             ),
                             ft.Column(
@@ -354,11 +359,6 @@ def main(page: ft.Page, route="/relatorio_1"):
             )
         page.update()
 
-    def insert():
-        requisicao = requests.post(f'{link}/Prontuarios/.json',data=json.dumps(dados))
-        print(requisicao)
-
-    # duas funções para a caixa de dialogo no final do código, quando o cliente aperta enviar relatorio
     def open_dlg(e):
         page.dialog = dlg
         dlg.open = True
@@ -411,17 +411,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.TextButton(text="teste")
         ]
     )
-    #BOtão Enviar da tela da ficha ATENçÃO PARA A FUNçÂO DO ON_CLICK
-    btn_enviar = ft.ElevatedButton(
-        content=ft.Text("Enviar relatório", color="BLACK"),
-        adaptive=True,
-        bgcolor="WHITE",
-        on_click=lambda _: insert,
-        style=ft.ButtonStyle(
-            padding=30,
-            shape=ft.RoundedRectangleBorder(radius=5),
-        ),
-    )
+
     #BOTÃO LOGIN DO PROF
     btn_login = ft.ElevatedButton(
         content=ft.Text("Entrar", color="BLACK"),
@@ -652,11 +642,11 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=25,
         weight=ft.FontWeight.BOLD,
     )
-    adm_valor = ft.RadioGroup(content=ft.Column([ft.Row([
-        ft.Column([ft.Radio(value="Preservada", label="Preservada")]),
-        ft.Column([ft.Radio(value="Ilimitada", label="Ilimitada")])
-    ])
-    ])
+    adm_preservada = ft.Checkbox(
+        label="Preservada", value=False, tristate=True
+    )
+    adm_ilimitada = ft.Checkbox(
+        label="Ilimitada", value=False, tristate=True
     )
     movimento_adm = ft.TextField(
         label="Movimento:"
@@ -842,6 +832,15 @@ def main(page: ft.Page, route="/relatorio_1"):
     ])
     ])
     )
+    presente_direito_plantar = ft.Dropdown(
+        label="",
+        width=130,
+        height=40,
+        options=[
+            ft.dropdown.Option("F", "F"),
+            ft.dropdown.Option("E", "E")
+        ]
+    )
     ausente_checkbox_direito_plantar = ft.Checkbox(
         label="", value=False
     )
@@ -862,6 +861,15 @@ def main(page: ft.Page, route="/relatorio_1"):
         ft.Column([ft.Radio(value="E", label="E")])
     ])
     ])
+    )
+    presente_esquerdo_plantar = ft.Dropdown(
+        label="",
+        width=130,
+        height=40,
+        options=[
+            ft.dropdown.Option("F", "F"),
+            ft.dropdown.Option("E", "E")
+        ]
     )
     ausente_checkbox_esquerdo_plantar = ft.Checkbox(
         label="", value=False
@@ -1078,6 +1086,23 @@ def main(page: ft.Page, route="/relatorio_1"):
         max_length=500
     )
 
+    def insert(link:str , dados:dict):
+        requisicao = requests.post(f'{link}/Prontuarios/.json', data=json.dumps(dados))
+        print(requisicao.content)
+        print(requisicao)
+
+    #BOtão Enviar da tela da ficha ATENçÃO PARA A FUNçÂO DO ON_CLICK
+    btn_enviar = ft.ElevatedButton(
+        content=ft.Text("Enviar relatório", color="BLACK"),
+        adaptive=True,
+        bgcolor="WHITE",
+        on_click=lambda e: insert(link, dados),
+        style=ft.ButtonStyle(
+            padding=30,
+            shape=ft.RoundedRectangleBorder(radius=5),
+        ),
+    )
+
     #DICIONARIO SALVO PARA ENVIAR OS DADOS AO BD
     dados = {
         'nome': nome_paciente.value,
@@ -1109,7 +1134,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             'Andador': andador.value,
             'Cadeira de Rodas': cadeira_rodas.value,
             'Cicatriz': cicatriz.value,
-            'Escara Local': escara.value,
+            'Escara': escara.value,
+            'Escara Local': local_escara.value,
             'Colaborativo': colaborativo.value,
             'Não Colaborativo': nao_colaborativo.value,
             'Hidratado': hidratado.value,
@@ -1121,24 +1147,33 @@ def main(page: ft.Page, route="/relatorio_1"):
         },
         'Palpação': {
             'Trofismo': {
-                'Tipo': atrofia.value, #|| hipertrofia.value || normotrofia.value, ALTERAR DEPOIS
+                'Atrofia': atrofia.value,
+                'Hipotrofia': hipotrofia.value,
+                'Hipertrofia': hipertrofia.value, 
+                'Normotrofia': normotrofia.value,
                 'Local': local_trofismo.value
             },  # FIM TROFISMO
             'Tônus': {
-                'Tipo': atonia.value, #|| hipotonia.value || normotonia.value || normotonia.value, ALTERAR DEPOIS
-                'Normotonia': hipertonia_plastica.value #|| hipertonia_elastica.value  # NORMOTONIA VAI NO TIPO, MAS EXISTE ESSES DOIS TIPOS
+                'Atonia': atonia.value, 
+                'Hipotonia': hipotonia.value,
+                'Normotonia': normotonia.value,
+                'Hipertonia': hipertonia.value,
+                'Hipertonia plastica': hipertonia_plastica.value,
+                'Hipertonia elastica': hipertonia_elastica.value  
             },  # FIM TONUS
             'Intensidade da Hipertonia': intensidade_hipertonia.value
         },  # FIM PALPAÇÃO
         'ADM': {
-            'Assegurada?': adm_valor,
-            'Movimento': 'movimento_adm.value'
+            'Preservada': adm_preservada.value,
+            'Ilimitada': adm_ilimitada.value,
+            'Movimento': movimento_adm.value
         },  # FIM ADM
         'Reflexos': {
             'Reflexos Profundo': {
                 'Direito': {
                     'Bicipatal': bicipital_direito.value,
                     'Triciptal': tricipital_direito.value,
+                    'Estilorradial': estilorradial_direito.value,
                     'Cúbitopronador': cubitopronador_direito.value,
                     'Patelar': patelar_direito.value,
                     'Aquileu': aquileu_direito.value,
@@ -1147,20 +1182,25 @@ def main(page: ft.Page, route="/relatorio_1"):
                 'Esquerdo': {
                     'Bicipatal': bicipital_esquerdo.value,
                     'Triciptal': tricipital_esquerdo.value,
+                    'Estilorradial': estilorradial_esquerdo.value,
                     'Cúbitopronador': cubitopronador_esquerdo.value,
                     'Patelar': patelar_esquerdo.value,
                     'Aquileu': aquileu_esquerdo.value,
                     'Adutor': adutor_esquerdo.value
                 }  # FIM REFLEXOS PROFUNDOS ESQUERDO
             },  # FIM REFLEXOS PROFUNDOS
-            'Reflexos Superficiasi': {
+            'Reflexos Superficiais': {
                 'Direito': {
-                    'Cutaneo Planar': False,        #'Presente(presente_radiobutton_direito_plantar.value) || ausente_checkbox_direito_plantar.value',
-                    'Cutaneo Abdominal': False          #'presente_checkbox_abdominal_direito.value || ausente_checkbox_abdominal_direito.value'
+                    'Cutaneo Plantar Presente': presente_direito_plantar.value,
+                    'Cutaneo Plantar Ausente': ausente_checkbox_direito_plantar.value,        
+                    'Cutaneo Abdominal Presente': presente_checkbox_abdominal_direito.value,
+                    'Cutaneo abdominal Ausente': ausente_checkbox_abdominal_direito.value,        
                 },  # FIM REFLEXOS SUPERFICIAIS DIREITO
                 'Esquerdo': {
-                    'Cutaneo Planar': False  ,               #'Presente(presente_radiobutton_esquerdo_plantar.value) || ausente_checkbox_esquerdo_plantar.value',
-                    'Cutaneo Abdominal': False                   #'presente_checkbox_abdominal_esquerdo.value || ausente_checkbox_abdominal_esquerdo.value'
+                    'Cutaneo Plantar Presente': presente_esquerdo_plantar.value,
+                    'Cutaneo Plantar Ausente': ausente_checkbox_esquerdo_plantar.value,            
+                    'Cutaneo Abdominal Presente': presente_checkbox_abdominal_esquerdo.value,
+                    'Cutaneo Abdominal Ausente': ausente_checkbox_abdominal_esquerdo.value                  
                 }  # FIM REFLEXOS SUPERFICIAIS ESQUERDO
             }  # FIM REFLEXOS SUPERFICIAIS
         },  # FIM REFLEXOS
@@ -1204,7 +1244,8 @@ def main(page: ft.Page, route="/relatorio_1"):
         'Testes Funcionais': {
             'TUG': testes_funcionas.value
         },  # FIM TESTES FUNCIONAIS
-        'Avalialção Marcha': avaliacao_marcha.value
+        'Avalialção Marcha': avaliacao_marcha.value,
+        'Observações': observacoes.value
     }  # FIM FICHA
 
 
