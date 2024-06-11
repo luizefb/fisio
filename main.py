@@ -387,6 +387,8 @@ def main(page: ft.Page, route="/relatorio_1"):
     def teste():
         print(nome_paciente.value)
         print(has.value)
+        print(sexo_paciente.value)
+        print(type(sexo_paciente.value))
 
     #Função do login do prof, onde pode mudar a senha e login
     def login_prof():
@@ -448,6 +450,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Feminino", "Feminino")
         ]
     )
+    sexo_paciente_valor = sexo_paciente.value
+
     telefone_paciente = ft.TextField(
         label="Telefone de Paciente",
         prefix_text="(91)",
@@ -629,6 +633,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Grande", "Grande")
         ]
     )
+    intensidade_hipertonia_valor = intensidade_hipertonia.value 
 
     # Aqui começa o "IV" de ADM
     texto_adm = ft.Text(
@@ -675,6 +680,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    bicipital_direito_valor = bicipital_direito.value
+
     tricipital_direito = ft.Dropdown(
         label="Tricipital",
         options=[
@@ -684,6 +691,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    tricipital_direito_valor = tricipital_direito.value
+
     estilorradial_direito = ft.Dropdown(
         label="Estilorradial",
         options=[
@@ -693,6 +702,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    estilorradial_direito_valor = estilorradial_direito.value
+
     cubitopronador_direito = ft.Dropdown(
         label="Cúbitopronador",
         options=[
@@ -702,6 +713,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    cubitopronador_direito_valor = cubitopronador_direito.value
+
     patelar_direito = ft.Dropdown(
         label="Patelar",
         options=[
@@ -711,6 +724,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    patelar_direito_valor = patelar_direito.value
+
     aquileu_direito = ft.Dropdown(
         label="Aquileu",
         options=[
@@ -720,6 +735,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    aquileu_direito_valor = aquileu_direito.value
+
     adutor_direito = ft.Dropdown(
         label="Adutor",
         options=[
@@ -729,6 +746,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    adutor_direito_valor = adutor_direito.value
 
     # Aqui é a parte do esquerdo
     texto_esquerdo = ft.Text(
@@ -745,6 +763,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    bicipital_esquerdo_valor = bicipital_esquerdo.value
+    
     tricipital_esquerdo = ft.Dropdown(
         label="Tricipital",
         options=[
@@ -754,6 +774,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    tricipital_esquerdo_valor = tricipital_esquerdo.value
+
     estilorradial_esquerdo = ft.Dropdown(
         label="Estilorradial",
         options=[
@@ -763,6 +785,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    estilorradial_esquerdo_valor = estilorradial_esquerdo.value
+
     cubitopronador_esquerdo = ft.Dropdown(
         label="Cúbitopronador",
         options=[
@@ -772,6 +796,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    cubitopronador_esquerdo_valor = cubitopronador_esquerdo.value
+
     patelar_esquerdo = ft.Dropdown(
         label="Patelar",
         options=[
@@ -781,6 +807,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    patelar_esquerdo_valor = patelar_esquerdo.value
+
     aquileu_esquerdo = ft.Dropdown(
         label="Aquileu",
         options=[
@@ -790,6 +818,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    aquileu_esquerdo_valor = aquileu_esquerdo.value
+
     adutor_esquerdo = ft.Dropdown(
         label="Adutor",
         options=[
@@ -799,6 +829,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    adutor_esquerdo_valor = adutor_esquerdo.value
+
     # Aqui é a parte dos reflexos superficiais
     texto_reflexos_superficiais = ft.Text(
         "Reflexos superficiais",
@@ -820,12 +852,6 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=15,
         weight=ft.FontWeight.BOLD,
     )
-    presente_radiobutton_direito_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
-        ft.Column([ft.Radio(value="F", label="F")]),
-        ft.Column([ft.Radio(value="E", label="E")])
-    ])
-    ])
-    )
     presente_direito_plantar = ft.Dropdown(
         label="",
         width=130,
@@ -835,6 +861,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("E", "E")
         ]
     )
+    presente_direito_plantar_valor = presente_direito_plantar.value
+
     ausente_checkbox_direito_plantar = ft.Checkbox(
         label="", value=False
     )
@@ -849,13 +877,6 @@ def main(page: ft.Page, route="/relatorio_1"):
     ausente_checkbox_abdominal_direito = ft.Checkbox(
         label="", value=False
     )
-
-    presente_radiobutton_esquerdo_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
-        ft.Column([ft.Radio(value="F", label="F")]),
-        ft.Column([ft.Radio(value="E", label="E")])
-    ])
-    ])
-    )
     presente_esquerdo_plantar = ft.Dropdown(
         label="",
         width=130,
@@ -865,6 +886,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("E", "E")
         ]
     )
+    presente_esquerdo_plantar_valor = presente_esquerdo_plantar.value
+
     ausente_checkbox_esquerdo_plantar = ft.Checkbox(
         label="", value=False
     )
@@ -969,6 +992,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    index_index_valor = index_index.value
+
     index_nariz = ft.Dropdown(
         label="Index-Nariz",
         width=175,
@@ -977,6 +1002,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    index_nariz_valor = index_nariz.value
+
     calcanhar_joelho = ft.Dropdown(
         label="Calcanhar-Joelho",
         width=175,
@@ -985,6 +1012,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    calcanhar_joelho_valor = calcanhar_joelho.value
+
     texto_equilibrio = ft.Text(
         "IX-Equilíbrio",
         size=25,
@@ -1003,6 +1032,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Ruim", "Ruim")
         ]
     )
+    tronco_valor = tronco.value
+
     texto_romberg = ft.Text(
         "Romberg:",
         size=20,
@@ -1015,6 +1046,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Negativo", "Negativo")
         ]
     )
+    romberg_valor = romberg.value
+
     texto_romberg_sensi = ft.Text(
         "Romberg Sensibilizado:",
         size=20,
@@ -1027,6 +1060,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Negativo", "Negativo")
         ]
     )
+    romberg_sensibilizado_valor = romberg_sensibilizado.value
+
     texto_avd = ft.Text(
         "X-AVD's",
         size=25,
@@ -1040,6 +1075,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Independente", "Independente")
         ]
     )
+    avd_valor = avd.value
+
     texto_testes_funcionais = ft.Text(
         "XI-Testes Funcionais",
         size=25,
@@ -1053,6 +1090,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option(">= 30 segundos", ">= 30 segundos")
         ]
     )
+    testes_funcionas_valor = testes_funcionas.value
+
     texto_avaliacao_marcha = ft.Text(
         "XII-Avaliação da Marcha",
         size=25,
@@ -1069,6 +1108,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Em tesoura", "Em tesoura")
         ]
     )
+    avaliacao_marcha_valor = avaliacao_marcha.value
+
     texto_observacoes = ft.Text(
         "Observações:",
         size=25,
@@ -1116,7 +1157,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                 'Rubor': rubor.value
         }
         palpacao = {
-                'Intensidade da Hipertonia': intensidade_hipertonia.value,
+                'Intensidade da Hipertonia': intensidade_hipertonia_valor,
                 'Trofismo': {
                     'Atrofia': atrofia.value,
                     'Hipotrofia': hipotrofia.value,
@@ -1140,33 +1181,33 @@ def main(page: ft.Page, route="/relatorio_1"):
         }  # FIM ADM
         reflexosProfundos= {
                     'Direito': {
-                        'Bicipatal': bicipital_direito.value,
-                        'Triciptal': tricipital_direito.value,
-                        'Estilorradial': estilorradial_direito.value,
-                        'Cúbitopronador': cubitopronador_direito.value,
-                        'Patelar': patelar_direito.value,
-                        'Aquileu': aquileu_direito.value,
-                        'Adutor': adutor_direito.value
+                        'Bicipatal': bicipital_direito_valor,
+                        'Triciptal': tricipital_direito_valor,
+                        'Estilorradial': estilorradial_direito_valor,
+                        'Cúbitopronador': cubitopronador_direito_valor,
+                        'Patelar': patelar_direito_valor,
+                        'Aquileu': aquileu_direito_valor,
+                        'Adutor': adutor_direito_valor
                     },  # FIM REFLEXOS PROFUNDOS DIREITO
                     'Esquerdo': {
-                        'Bicipatal': bicipital_esquerdo.value,
-                        'Triciptal': tricipital_esquerdo,
-                        'Estilorradial': estilorradial_esquerdo.value,
-                        'Cúbitopronador': cubitopronador_esquerdo.value,
-                        'Patelar': patelar_esquerdo.value,
-                        'Aquileu': aquileu_esquerdo.value,
-                        'Adutor': adutor_esquerdo.value
+                        'Bicipatal': bicipital_esquerdo_valor,
+                        'Triciptal': tricipital_esquerdo_valor,
+                        'Estilorradial': estilorradial_esquerdo_valor,
+                        'Cúbitopronador': cubitopronador_esquerdo_valor,
+                        'Patelar': patelar_esquerdo_valor,
+                        'Aquileu': aquileu_esquerdo_valor,
+                        'Adutor': adutor_esquerdo_valor
                     }  # FIM REFLEXOS PROFUNDOS ESQUERDO
         }  # FIM REFLEXOS PROFUNDOS
         reflexosSuperficiais = {
                     'Direito': {
-                        'Cutaneo Plantar Presente': presente_direito_plantar.value,
+                        'Cutaneo Plantar Presente': presente_direito_plantar_valor,
                         'Cutaneo Plantar Ausente': ausente_checkbox_direito_plantar.value,
                         'Cutaneo Abdominal Presente': presente_checkbox_abdominal_direito.value,
                         'Cutaneo abdominal Ausente': ausente_checkbox_abdominal_direito.value
                     },
                     'Esquerdo': {
-                        'Cutaneo Plantar Presente': presente_esquerdo_plantar.value,
+                        'Cutaneo Plantar Presente': presente_esquerdo_plantar_valor,
                         'Cutaneo Plantar Ausente': ausente_checkbox_esquerdo_plantar.value,
                         'Cutaneo Abdominal Presente': presente_checkbox_abdominal_esquerdo.value,
                         'Cutaneo Abdominal Ausente': ausente_checkbox_abdominal_esquerdo.value
@@ -1205,24 +1246,24 @@ def main(page: ft.Page, route="/relatorio_1"):
         }
 
         coordenacao = {
-                'index-index': index_index.value,
-                'index-nariz': index_nariz.value,
-                'calcanhar joelho': calcanhar_joelho.value
+                'index-index': index_index_valor,
+                'index-nariz': index_nariz_valor,
+                'calcanhar joelho': calcanhar_joelho_valor
 
         }  # FIM COORDENAÇÃO
         equilibrio = {
-                'Tronco': tronco.value,
-                'Romberg': romberg.value,
-                'Romberg Sensibilizado': romberg_sensibilizado.value
+                'Tronco': tronco_valor,
+                'Romberg': romberg_valor,
+                'Romberg Sensibilizado': romberg_sensibilizado_valor
         }  # FIM EQUILIBRIO
         testesFuncionais = {
-                'TUG': testes_funcionas.value
+                'TUG': testes_funcionas_valor#
         } # FIM TESTES FUNCIONAIS
 
         dados = {
             'nome': nome_paciente.value,
             'idade': idade_paciente.value,
-            'sexo': sexo_paciente.value,
+            'sexo': sexo_paciente_valor,
             'cidade': endereco_paciente.value,
             'telefone': telefone_paciente.value,
             'anamnese':anamnese,
@@ -1234,14 +1275,15 @@ def main(page: ft.Page, route="/relatorio_1"):
             'atividades Funcionais':atividadesFuncionais,
             'coordenacao':coordenacao,
             'equilibrio':equilibrio,
-            'AVDs': avd.value,
+            'AVDs': avd_valor,
             'testes Funcionais':testesFuncionais,
-            'Avalialcao Marcha': avaliacao_marcha.value,
+            'Avalialcao Marcha': avaliacao_marcha_valor,
             'Observacoes': observacoes.value
         }
 
-        #print(requisicao.content)
-        #print(requisicao)
+        requisicao = requests.post(f'{link}Prontuarios/.json', data=json.dumps(dados))
+        print(requisicao.content)
+        print(requisicao)
 
     #BOtão Enviar da tela da ficha ATENçÃO PARA A FUNçÂO DO ON_CLICK
     btn_enviar = ft.ElevatedButton(
