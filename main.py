@@ -73,7 +73,6 @@ def main(page: ft.Page, route="/relatorio_1"):
                     controls=[
                         menu_topo,
                         texto_relatorio,
-                        numero_prontuario,
                         nome_paciente,
 
                         ft.Row([
@@ -432,11 +431,6 @@ def main(page: ft.Page, route="/relatorio_1"):
         weight=ft.FontWeight.BOLD,
     )
     # Aqui para baixo são todas as info do cliente, termina antes de anmasseses la
-    numero_prontuario = ft.TextField(
-        label="Nº do Prontuário",
-        disabled=True,
-        value="123"
-    )
     nome_paciente = ft.TextField(
         label="Nome do paciente",
         max_length=60,
@@ -631,7 +625,7 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="Instensidade da hipertonia",
         options=[
             ft.dropdown.Option("Pequena", "Pequena"),
-            ft.dropdown.Option("Média", "Média"),
+            ft.dropdown.Option("Media", "Media"),
             ft.dropdown.Option("Grande", "Grande")
         ]
     )
@@ -1068,7 +1062,7 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="",
         options=[
             ft.dropdown.Option("Normal", "Normal"),
-            ft.dropdown.Option("Atáxica", "Atáxica"),
+            ft.dropdown.Option("Ataxica", "Ataxica"),
             ft.dropdown.Option("Escarvante", "Escarvante"),
             ft.dropdown.Option("Parkinsoniana", "Parkinsoniana"),
             ft.dropdown.Option("Anserina", "Anserina"),
