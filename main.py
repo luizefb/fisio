@@ -143,10 +143,11 @@ def main(page: ft.Page, route="/relatorio_1"):
 
                         ft.Row([
                             ft.Column(
-                                [ft.Container(atonia), ft.Container(hipotonia), ft.Container(normotonia), ]),
+                                [ft.Container(atonia), ft.Container(hipertonia)]),
                             ft.Column(
-                                [ft.Container(hipertonia), ft.Container(hipertonia_plastica),
-                                 ft.Container(hipertonia_elastica), ])
+                                [ft.Container(hipotonia), ft.Container(hipertonia_plastica)]),
+                            ft.Column(
+                                [ft.Container(normotonia), ft.Container(hipertonia_elastica)])
                         ]),
 
                         ft.Container(intensidade_hipertonia),
@@ -349,7 +350,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                         ]),
                         ft.Container(
                             #c1,
-                            lv,
+                            #lv,
                             border=ft.border.all(1),
 
                         ),
