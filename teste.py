@@ -2,170 +2,59 @@ import requests
 import json
 
 link = 'https://teste-dbd-default-rtdb.firebaseio.com/'
-anamnese = {
-                'HDA': '20',
-                'Sinais Vitais': {
-                    'PA': '20',
-                    'FC': '20',
-                    'FR': '20',
-                    'SPO2': '20',
-                    'QP': '20'
-                },
-                'Comorbidade': {
-                    'HAS': '20',
-                    'DM': '20',
-                    'Cardiopatia': '20',
-                    'Outra': '20'
-                },
-                'AF': '20'
-            }
-inspecao = {
-                'locomoção Independente': True,
-                'Muleta': False,
-                'Andador': True,
-                'Cadeira de Rodas': False,
-                'Cicatriz': True,
-                'Escara': False,
-                'Escara Local': True,
-                'Colaborativo': False,
-                'Não Colaborativo': True,
-                'Hidratado': False,
-                'Corado': True,
-                'Hematoma': False,
-                'Edema': True,
-                'Calor': False,
-                'Rubor': True
-}
-palpacao = {
-                'Intensidade da Hipertonia': '40',
-                'Trofismo': {
-                    'Atrofia': False,
-                    'Hipotrofia': True,
-                    'Hipertrofia': False,
-                    'Normotrofia': True,
-                    'Local': False
-                },  # FIM TROFISMO
-                'Tônus': {
-                    'Atonia':True,
-                    'Hipotonia': False,
-                    'Normotonia': True,
-                    'Hipertonia': False,
-                    'Hipertonia plastica': True,
-                    'Hipertonia elastica': False
-                }  # FIM TONUS
-            }  # FIM PALPAÇÃO
-adm = {
-                'Preservada': False,
-                'Ilimitada': True,
-                'Movimento': 'Rodar o Giroscopio'
-            }  # FIM ADM
-reflexosProfundos= {
-                    'Direito': {
-                        'Bicipatal': 'hipo',
-                        'Triciptal': 'hipo',
-                        'Estilorradial': 'hipo',
-                        'Cúbitopronador': 'hipo',
-                        'Patelar': 'hipo',
-                        'Aquileu': 'hipo',
-                        'Adutor': 'hipo'
-                    },  # FIM REFLEXOS PROFUNDOS DIREITO
-                    'Esquerdo': {
-                        'Bicipatal': 'hipo',
-                        'Triciptal': 'hipo',
-                        'Estilorradial': 'hipo',
-                        'Cúbitopronador': 'hipo',
-                        'Patelar': 'hipo',
-                        'Aquileu': 'hipo',
-                        'Adutor': 'hipo'
-                    }  # FIM REFLEXOS PROFUNDOS ESQUERDO
-                }  # FIM REFLEXOS PROFUNDOS
-reflexosSuperficiais = {
-                    'Direito': {
-                        'Cutaneo Plantar Presente': True,
-                        'Cutaneo Plantar Ausente': False,
-                        'Cutaneo Abdominal Presente': False,
-                        'Cutaneo abdominal Ausente': True
-                    },
-                    'Esquerdo': {
-                        'Cutaneo Plantar Presente': 'hipo',
-                        'Cutaneo Plantar Ausente': 'hipo',
-                        'Cutaneo Abdominal Presente': 'hipo',
-                        'Cutaneo Abdominal Ausente': 'hipo'
-                    }
-} # FIM REFLEXOS SUPERFICIAIS
-reflexos = {
-    'reflexos Profundos':reflexosProfundos,
-    'reflexos Superficiais':reflexosSuperficiais
-}
-motricidadeInvoluntaria = {
-                'Movimentos Coreicos': False,
-                'Movimentos Aleatorios': True,
-                'Balismo': True,
-                'Distonia': False,
-                'Câimbras': False,
-                'Convulsoes': True,
-                'Miocionia': False,
-                'Soluços': True,
-                'Espasmos': False,
-                'Faciculações(Micimias)': False,
-                'Tremores': True,
-                'Tiques': False
-            }# FIM MOTRICIDADE INVOLUNTARIA
 
-atividadesFuncionais = {
-                'DD p DLE : DD p DLD': False,
-                'DLE p DV : DLD p DV': True,
-                '4 apoios': True,
-                '4 apoios p ajoelhado': True,
-                'Semi ajoelhado p de pe': False,
-                'Arastar Cruzado': False,
-                'Sentado': True,
-                'Ajoelhado p semi ajoelhado': False,
-                'Rolar': False,
-                'Arastar Homolateral': True
-}
+#COMEÇO PESQUISA -------------------------------------------
+def pesquisa(link:str):
+    #COLETA TODOS OS LINKS
+    pesquisa = requests.get(f'{link}Prontuarios/.json')
 
-coordenacao = {
-                'index-index': '+',
-                'index-nariz': '-',
-                'calcanhar joelho': '+'
+    #TRANSFORMA EM DICIONARIO
+    dic_pesquisa = pesquisa.json()
 
-}  # FIM COORDENAÇÃO
-equilibrio = {
-                'Tronco': 'bom',
-                'Romberg': True,
-                'Romberg Sensibilizado': True
-}  # FIM EQUILIBRIO
-testesFuncionais = {
-                'TUG': f'< 10sec'
-} # FIM TESTES FUNCIONAIS
+    #PEGA APENAS OS VALORES DAS CHAVES
+    dic_pesquisa = dic_pesquisa.values()
 
-dados = {
-    'nome':'Marco',
-    'idade':'20',
-    'sexo':'masculino',
-    'cidade':'Braganaca',
-    'telefone':'91985901979',
-    'anamnese':anamnese,
-    'inspecao':inspecao,
-    'palpacao':palpacao,
-    'adm':adm,
-    'reflexos':reflexos,
-    'motricidade Involuntaria':motricidadeInvoluntaria,
-    'atividades Funcionais':atividadesFuncionais,
-    'coordenacao':coordenacao,
-    'equilibrio':equilibrio,
-    'AVDs': 'dependente',
-    'testes Funcionais':testesFuncionais,
-    'Avalialcao Marcha': 'Normal',
-    'Observacoes': 'É um macaco msm pqp'
-}
+    # AQ TU TEM Q COLOCAR O NOME DO PACIENTE
+    select = "Salve"
 
-requisicao = requests.post(f'{link}Prontuarios/.json', data=json.dumps(dados))
-print(requisicao)
+    #PROCURA O NOME E PADRONIZA OQ N É A CHAVE DESEJADA
+    encontrar_paciente = map(lambda dic: dic if dic['nome'] == select else '#', dic_pesquisa)
 
-pesquisa = requests.get(f'{link}Prontuarios/.json')
+    #ELIMINA AS OUTRAS CHAVES
+    paciente = tuple(filter(lambda dic: dic != '#', encontrar_paciente))
 
-dic_pesquisa = pesquisa.json()
-for id in dic_pesquisa:
-    print(dic_pesquisa[id]["nome"])
+    #PEGA A CHAVE COM AS INFORMAÇÕES
+    paciente_info = dict(paciente[0])
+
+    #PRINT PRA VE C TA FUNCIONANDO
+    print(paciente_info["nome"])
+
+#FIM PESQUISA -------------------------------------------
+
+#COMECO DELETE -------------------------------------------
+def delete(link:str):
+    pesquisa = requests.get(f'{link}Prontuarios/.json')
+
+    #TRANSFORMA EM DICIONARIO
+    dic_pesquisa = pesquisa.json()
+
+    # AQ TU TEM Q COLOCAR O NOME DO PACIENTE QUE TU QUER APAGAR
+    select = "Salve"
+
+    #PPROCURA OQ TU QUER E APAGA AO ENCONTRAR O NOME DO PACIENTE. CASO N ENCONTRE ELE N FAZ NADA
+    for id in dic_pesquisa:
+        if dic_pesquisa[id]['marco'] == select:
+            requisicao = requests.delete(f'{link}Prontuarios/{id}')
+        else:
+            pass
+
+#FIM DELETE
+
+#INICIO UPDATE
+def update(link:str):
+    pass
+#FIM UPDATE
+
+pesquisa(link=link)
+delete(link=link)
+update(link=link)
