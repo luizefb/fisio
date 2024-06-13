@@ -73,7 +73,6 @@ def main(page: ft.Page, route="/relatorio_1"):
                     controls=[
                         menu_topo,
                         texto_relatorio,
-                        numero_prontuario,
                         nome_paciente,
 
                         ft.Row([
@@ -144,10 +143,11 @@ def main(page: ft.Page, route="/relatorio_1"):
 
                         ft.Row([
                             ft.Column(
-                                [ft.Container(atonia), ft.Container(hipotonia), ft.Container(normotonia), ]),
+                                [ft.Container(atonia), ft.Container(hipertonia)]),
                             ft.Column(
-                                [ft.Container(hipertonia), ft.Container(hipertonia_plastica),
-                                 ft.Container(hipertonia_elastica), ])
+                                [ft.Container(hipotonia), ft.Container(hipertonia_plastica)]),
+                            ft.Column(
+                                [ft.Container(normotonia), ft.Container(hipertonia_elastica)])
                         ]),
 
                         ft.Container(intensidade_hipertonia),
@@ -350,7 +350,7 @@ def main(page: ft.Page, route="/relatorio_1"):
                         ]),
                         ft.Container(
                             #c1,
-                            lv,
+                            #lv,
                             border=ft.border.all(1),
 
                         ),
@@ -388,6 +388,8 @@ def main(page: ft.Page, route="/relatorio_1"):
     def teste():
         print(nome_paciente.value)
         print(has.value)
+        print(sexo_paciente.value)
+        print(type(sexo_paciente.value))
 
     #Função do login do prof, onde pode mudar a senha e login
     def login_prof():
@@ -432,11 +434,6 @@ def main(page: ft.Page, route="/relatorio_1"):
         weight=ft.FontWeight.BOLD,
     )
     # Aqui para baixo são todas as info do cliente, termina antes de anmasseses la
-    numero_prontuario = ft.TextField(
-        label="Nº do Prontuário",
-        disabled=True,
-        value="123"
-    )
     nome_paciente = ft.TextField(
         label="Nome do paciente",
         max_length=60,
@@ -454,10 +451,12 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Feminino", "Feminino")
         ]
     )
+    sexo_paciente_valor = sexo_paciente.value
+
     telefone_paciente = ft.TextField(
         label="Telefone de Paciente",
         prefix_text="(91)",
-        max_length=9,
+        max_length=11,
         input_filter=ft.NumbersOnlyInputFilter()
     )
     profissao_paciente = ft.TextField(
@@ -631,10 +630,11 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="Instensidade da hipertonia",
         options=[
             ft.dropdown.Option("Pequena", "Pequena"),
-            ft.dropdown.Option("Média", "Média"),
+            ft.dropdown.Option("Media", "Media"),
             ft.dropdown.Option("Grande", "Grande")
         ]
     )
+    intensidade_hipertonia_valor = intensidade_hipertonia.value 
 
     # Aqui começa o "IV" de ADM
     texto_adm = ft.Text(
@@ -681,6 +681,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    bicipital_direito_valor = bicipital_direito.value
+
     tricipital_direito = ft.Dropdown(
         label="Tricipital",
         options=[
@@ -690,6 +692,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    tricipital_direito_valor = tricipital_direito.value
+
     estilorradial_direito = ft.Dropdown(
         label="Estilorradial",
         options=[
@@ -699,6 +703,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    estilorradial_direito_valor = estilorradial_direito.value
+
     cubitopronador_direito = ft.Dropdown(
         label="Cúbitopronador",
         options=[
@@ -708,6 +714,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    cubitopronador_direito_valor = cubitopronador_direito.value
+
     patelar_direito = ft.Dropdown(
         label="Patelar",
         options=[
@@ -717,6 +725,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    patelar_direito_valor = patelar_direito.value
+
     aquileu_direito = ft.Dropdown(
         label="Aquileu",
         options=[
@@ -726,6 +736,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    aquileu_direito_valor = aquileu_direito.value
+
     adutor_direito = ft.Dropdown(
         label="Adutor",
         options=[
@@ -735,6 +747,7 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    adutor_direito_valor = adutor_direito.value
 
     # Aqui é a parte do esquerdo
     texto_esquerdo = ft.Text(
@@ -751,6 +764,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    bicipital_esquerdo_valor = bicipital_esquerdo.value
+    
     tricipital_esquerdo = ft.Dropdown(
         label="Tricipital",
         options=[
@@ -760,6 +775,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    tricipital_esquerdo_valor = tricipital_esquerdo.value
+
     estilorradial_esquerdo = ft.Dropdown(
         label="Estilorradial",
         options=[
@@ -769,6 +786,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    estilorradial_esquerdo_valor = estilorradial_esquerdo.value
+
     cubitopronador_esquerdo = ft.Dropdown(
         label="Cúbitopronador",
         options=[
@@ -778,6 +797,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    cubitopronador_esquerdo_valor = cubitopronador_esquerdo.value
+
     patelar_esquerdo = ft.Dropdown(
         label="Patelar",
         options=[
@@ -787,6 +808,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    patelar_esquerdo_valor = patelar_esquerdo.value
+
     aquileu_esquerdo = ft.Dropdown(
         label="Aquileu",
         options=[
@@ -796,6 +819,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    aquileu_esquerdo_valor = aquileu_esquerdo.value
+
     adutor_esquerdo = ft.Dropdown(
         label="Adutor",
         options=[
@@ -805,6 +830,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Normo", "Normo")
         ]
     )
+    adutor_esquerdo_valor = adutor_esquerdo.value
+
     # Aqui é a parte dos reflexos superficiais
     texto_reflexos_superficiais = ft.Text(
         "Reflexos superficiais",
@@ -826,12 +853,6 @@ def main(page: ft.Page, route="/relatorio_1"):
         size=15,
         weight=ft.FontWeight.BOLD,
     )
-    presente_radiobutton_direito_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
-        ft.Column([ft.Radio(value="F", label="F")]),
-        ft.Column([ft.Radio(value="E", label="E")])
-    ])
-    ])
-    )
     presente_direito_plantar = ft.Dropdown(
         label="",
         width=130,
@@ -841,6 +862,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("E", "E")
         ]
     )
+    presente_direito_plantar_valor = presente_direito_plantar.value
+
     ausente_checkbox_direito_plantar = ft.Checkbox(
         label="", value=False
     )
@@ -855,13 +878,6 @@ def main(page: ft.Page, route="/relatorio_1"):
     ausente_checkbox_abdominal_direito = ft.Checkbox(
         label="", value=False
     )
-
-    presente_radiobutton_esquerdo_plantar = ft.RadioGroup(content=ft.Column([ft.Row([
-        ft.Column([ft.Radio(value="F", label="F")]),
-        ft.Column([ft.Radio(value="E", label="E")])
-    ])
-    ])
-    )
     presente_esquerdo_plantar = ft.Dropdown(
         label="",
         width=130,
@@ -871,6 +887,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("E", "E")
         ]
     )
+    presente_esquerdo_plantar_valor = presente_esquerdo_plantar.value
+
     ausente_checkbox_esquerdo_plantar = ft.Checkbox(
         label="", value=False
     )
@@ -975,6 +993,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    index_index_valor = index_index.value
+
     index_nariz = ft.Dropdown(
         label="Index-Nariz",
         width=175,
@@ -983,6 +1003,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    index_nariz_valor = index_nariz.value
+
     calcanhar_joelho = ft.Dropdown(
         label="Calcanhar-Joelho",
         width=175,
@@ -991,6 +1013,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("-", "-")
         ]
     )
+    calcanhar_joelho_valor = calcanhar_joelho.value
+
     texto_equilibrio = ft.Text(
         "IX-Equilíbrio",
         size=25,
@@ -1009,6 +1033,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Ruim", "Ruim")
         ]
     )
+    tronco_valor = tronco.value
+
     texto_romberg = ft.Text(
         "Romberg:",
         size=20,
@@ -1021,6 +1047,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Negativo", "Negativo")
         ]
     )
+    romberg_valor = romberg.value
+
     texto_romberg_sensi = ft.Text(
         "Romberg Sensibilizado:",
         size=20,
@@ -1033,6 +1061,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Negativo", "Negativo")
         ]
     )
+    romberg_sensibilizado_valor = romberg_sensibilizado.value
+
     texto_avd = ft.Text(
         "X-AVD's",
         size=25,
@@ -1046,6 +1076,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option("Independente", "Independente")
         ]
     )
+    avd_valor = avd.value
+
     texto_testes_funcionais = ft.Text(
         "XI-Testes Funcionais",
         size=25,
@@ -1059,6 +1091,8 @@ def main(page: ft.Page, route="/relatorio_1"):
             ft.dropdown.Option(">= 30 segundos", ">= 30 segundos")
         ]
     )
+    testes_funcionas_valor = testes_funcionas.value
+
     texto_avaliacao_marcha = ft.Text(
         "XII-Avaliação da Marcha",
         size=25,
@@ -1068,13 +1102,15 @@ def main(page: ft.Page, route="/relatorio_1"):
         label="",
         options=[
             ft.dropdown.Option("Normal", "Normal"),
-            ft.dropdown.Option("Atáxica", "Atáxica"),
+            ft.dropdown.Option("Ataxica", "Ataxica"),
             ft.dropdown.Option("Escarvante", "Escarvante"),
             ft.dropdown.Option("Parkinsoniana", "Parkinsoniana"),
             ft.dropdown.Option("Anserina", "Anserina"),
             ft.dropdown.Option("Em tesoura", "Em tesoura")
         ]
     )
+    avaliacao_marcha_valor = avaliacao_marcha.value
+
     texto_observacoes = ft.Text(
         "Observações:",
         size=25,
@@ -1087,152 +1123,166 @@ def main(page: ft.Page, route="/relatorio_1"):
     )
 
     def insert(link:str):
-        # DICIONARIO SALVO PARA ENVIAR OS DADOS AO BD
-        dados = {
-            'nome': f'{nome_paciente.value}',
-            'idade': f'{idade_paciente.value}',
-            'sexo': f'{sexo_paciente.value}',
-            'cidade': f'{endereco_paciente.value}',
-            'telefone': f'{telefone_paciente.value}',
-            'anamnese': {
-                'HDA': f'{hda_anamnese.value}',
+        anamnese = {
+                'HDA': hda_anamnese.value,
                 'Sinais Vitais': {
-                    'PA': f'{pa.value}',
-                    'FC': f'{fc.value}',
-                    'FR': f'{fr.value}',
-                    'SPO2': f'{sp02.value}',
-                    'QP': f'{qp.value}'
+                    'PA': pa.value,
+                    'FC': fc.value,
+                    'FR': fr.value,
+                    'SPO2': sp02.value,
+                    'QP': qp.value
                 },
                 'Comorbidade': {
-                    'HAS': f'{has.value}',
-                    'DM': f'{dm.value}',
-                    'Cardiopatia': f'{cardiopatia.value}',
-                    'Outra': f'{outra_comorbidades.value}'
+                    'HAS': has.value,
+                    'DM': dm.value,
+                    'Cardiopatia': cardiopatia.value,
+                    'Outra': outra_comorbidades.value
                 },
-                'AF': f'{af.value}'
-            },
-            'Inspeção': {
-                'locomoção Independente': f'{locomocao_independente.value}',
-                'Muleta': f'{muletas.value}',
-                'Andador': f'{andador.value}',
-                'Cadeira de Rodas': f'{cadeira_rodas.value}',
-                'Cicatriz': f'{cicatriz.value}',
-                'Escara': f'{escara.value}',
-                'Escara Local': f'{local_escara.value}',
-                'Colaborativo': f'{colaborativo.value}',
-                'Não Colaborativo': f'{nao_colaborativo.value}',
-                'Hidratado': f'{hidratado.value}',
-                'Corado': f'{corado.value}',
-                'Hematoma': f'{hematoma.value}',
-                'Edema': f'{edema.value}',
-                'Calor': f'{calor.value}',
-                'Rubor': f'{rubor.value}'
-            },
-            'Palpação': {
+                'AF': af.value
+        }
+        inspecao = {
+                'locomoção Independente': locomocao_independente.value,
+                'Muleta': muletas.value,
+                'Andador': andador.value,
+                'Cadeira de Rodas': cadeira_rodas.value,
+                'Cicatriz': cicatriz.value,
+                'Escara': escara.value,
+                'Escara Local': local_escara.value,
+                'Colaborativo': colaborativo.value,
+                'Não Colaborativo': nao_colaborativo.value,
+                'Hidratado': hidratado.value,
+                'Corado': corado.value,
+                'Hematoma': hematoma.value,
+                'Edema': edema.value,
+                'Calor': calor.value,
+                'Rubor': rubor.value
+        }
+        palpacao = {
+                'Intensidade da Hipertonia': intensidade_hipertonia_valor,
                 'Trofismo': {
-                    'Atrofia': f'{atrofia.value}',
-                    'Hipotrofia': f'{hipotrofia.value}',
-                    'Hipertrofia': f'{hipertrofia.value}',
-                    'Normotrofia': f'{normotrofia.value}',
-                    'Local': f'{local_trofismo.value}'
+                    'Atrofia': atrofia.value,
+                    'Hipotrofia': hipotrofia.value,
+                    'Hipertrofia': hipertrofia.value,
+                    'Normotrofia': normotrofia.value,
+                    'Local': local_trofismo.value
                 },  # FIM TROFISMO
                 'Tônus': {
-                    'Atonia': f'{atonia.value}',
-                    'Hipotonia': f'{hipotonia.value}',
-                    'Normotonia': f'{normotonia.value}',
-                    'Hipertonia': f'{hipertonia.value}',
-                    'Hipertonia plastica': f'{hipertonia_plastica.value}',
-                    'Hipertonia elastica': f'{hipertonia_elastica.value}'
-                },  # FIM TONUS
-                'Intensidade da Hipertonia': f'{intensidade_hipertonia.value}'
-            },  # FIM PALPAÇÃO
-            'ADM': {
-                'Preservada': f'{adm_preservada.value}',
-                'Ilimitada': f'{adm_ilimitada.value}',
-                'Movimento': f'{movimento_adm.value}'
-            },  # FIM ADM
-            'Reflexos': {
-                'Reflexos Profundo': {
+                    'Atonia': atonia.value,
+                    'Hipotonia': hipotonia.value,
+                    'Normotonia': normotonia.value,
+                    'Hipertonia': hipertonia.value,
+                    'Hipertonia plastica': hipertonia_plastica.value,
+                    'Hipertonia elastica': hipertonia_elastica.value
+                }  # FIM TONUS
+        }  # FIM PALPAÇÃO
+        adm = {
+                'Preservada': adm_preservada.value,
+                'Ilimitada': adm_ilimitada.value,
+                'Movimento': movimento_adm.value
+        }  # FIM ADM
+        reflexosProfundos= {
                     'Direito': {
-                        'Bicipatal': f'{bicipital_direito.value}',
-                        'Triciptal': f'{tricipital_direito.value}',
-                        'Estilorradial': f'{estilorradial_direito.value}',
-                        'Cúbitopronador': f'{cubitopronador_direito.value}',
-                        'Patelar': f'{patelar_direito.value}',
-                        'Aquileu': f'{aquileu_direito.value}',
-                        'Adutor': f'{adutor_direito.value}'
+                        'Bicipatal': bicipital_direito_valor,
+                        'Triciptal': tricipital_direito_valor,
+                        'Estilorradial': estilorradial_direito_valor,
+                        'Cúbitopronador': cubitopronador_direito_valor,
+                        'Patelar': patelar_direito_valor,
+                        'Aquileu': aquileu_direito_valor,
+                        'Adutor': adutor_direito_valor
                     },  # FIM REFLEXOS PROFUNDOS DIREITO
                     'Esquerdo': {
-                        'Bicipatal': f'{bicipital_esquerdo.value}',
-                        'Triciptal': f'{tricipital_esquerdo.value}',
-                        'Estilorradial': f'{estilorradial_esquerdo.value}',
-                        'Cúbitopronador': f'{cubitopronador_esquerdo.value}',
-                        'Patelar': f'{patelar_esquerdo.value}',
-                        'Aquileu': f'{aquileu_esquerdo.value}',
-                        'Adutor': f'{adutor_esquerdo.value}'
+                        'Bicipatal': bicipital_esquerdo_valor,
+                        'Triciptal': tricipital_esquerdo_valor,
+                        'Estilorradial': estilorradial_esquerdo_valor,
+                        'Cúbitopronador': cubitopronador_esquerdo_valor,
+                        'Patelar': patelar_esquerdo_valor,
+                        'Aquileu': aquileu_esquerdo_valor,
+                        'Adutor': adutor_esquerdo_valor
                     }  # FIM REFLEXOS PROFUNDOS ESQUERDO
-                },  # FIM REFLEXOS PROFUNDOS
-                'Reflexos Superficiais': {
+        }  # FIM REFLEXOS PROFUNDOS
+        reflexosSuperficiais = {
                     'Direito': {
-                        'Cutaneo Plantar Presente': f'{presente_direito_plantar.value}',
-                        'Cutaneo Plantar Ausente': f'{ausente_checkbox_direito_plantar.value}',
-                        'Cutaneo Abdominal Presente': f'{presente_checkbox_abdominal_direito.value}',
-                        'Cutaneo abdominal Ausente': f'{ausente_checkbox_abdominal_direito.value}',
-                    },  # FIM REFLEXOS SUPERFICIAIS DIREITO
+                        'Cutaneo Plantar Presente': presente_direito_plantar_valor,
+                        'Cutaneo Plantar Ausente': ausente_checkbox_direito_plantar.value,
+                        'Cutaneo Abdominal Presente': presente_checkbox_abdominal_direito.value,
+                        'Cutaneo abdominal Ausente': ausente_checkbox_abdominal_direito.value
+                    },
                     'Esquerdo': {
-                        'Cutaneo Plantar Presente': f'{presente_esquerdo_plantar.value}',
-                        'Cutaneo Plantar Ausente': f'{ausente_checkbox_esquerdo_plantar.value}',
-                        'Cutaneo Abdominal Presente': f'{presente_checkbox_abdominal_esquerdo.value}',
-                        'Cutaneo Abdominal Ausente': f'{ausente_checkbox_abdominal_esquerdo.value}'
-                    }  # FIM REFLEXOS SUPERFICIAIS ESQUERDO
-                }  # FIM REFLEXOS SUPERFICIAIS
-            },  # FIM REFLEXOS
-            'Motricidade Involuntaria': {
-                'Movimentos Coreicos': f'{movimentos_coreicos.value}',
-                'Movimentos Aleatorios': f'{movimentos_atetoicos.value}',
-                'Balismo': f'{balismo.value}',
-                'Distonia': f'{distonia.value}',
-                'Câimbras': f'{caimbras.value}',
-                'Convulsoes': f'{convulsoes.value}',
-                'Miocionia': f'{miocionia.value}',
-                'Soluços': f'{solucos.value}',
-                'Espasmos': f'{espasmos.value}',
-                'Faciculações(Micimias)': f'{fasciculacoes.value}',
-                'Tremores': f'{tremores.value}',
-                'Tiques': f'{tiques.value}'
-            },  # FIM MOTRICIDADE INVOLUNTARIA
-            'Atividades Funcionais': {
-                'D.D p/ D.L.E : D.D p/ D.L.D': f'{ddp.value}',
-                'D.L.E p/ D.V : D.L.D p/ D.V': f'{dle.value}',
-                '4 apoios': f'{quatro_apoios.value}',
-                '4 apoios p/ ajoelhado': f'{quatro_ajoelhado.value}',
-                'Semi ajoelhado /p de pe': f'{semi_ajoelhado.value}',
-                'Arastar Cruzado': f'{arrastar_cruzado.value}',
-                'Sentado': f'{sentado.value}',
-                'Ajoelhado p/ semi ajoelhado': f'{ajoelhado.value}',
-                'Rolar': f'{rolar.value}',
-                'Arastar Homolateral': f'{arrastar.value}'
-            },  # FIM ATIVIDADES FUNCIONAIS
-            'Coordenação': {
-                'index-index': f'{index_index.value}',
-                'index-nariz': f'{index_nariz.value}',
-                'calcanhar-joelho': f'{calcanhar_joelho.value}'
-            },  # FIM COORDENAÇÃO
-            'Equilibrio': {
-                'Tronco': f'{tronco.value}',
-                'Romberg': f'{romberg.value}',
-                'Romberg Sensibilizado': f'{romberg_sensibilizado.value}'
-            },  # FIM EQUILIBRIO
-            "AVD's": f'{avd.value}',
-            'Testes Funcionais': {
-                'TUG': f'{testes_funcionas.value}'
-            },  # FIM TESTES FUNCIONAIS
-            'Avalialção Marcha': f'{avaliacao_marcha.value}',
-            'Observações': f'{observacoes.value}'
-        }  # FIM FICHA
+                        'Cutaneo Plantar Presente': presente_esquerdo_plantar_valor,
+                        'Cutaneo Plantar Ausente': ausente_checkbox_esquerdo_plantar.value,
+                        'Cutaneo Abdominal Presente': presente_checkbox_abdominal_esquerdo.value,
+                        'Cutaneo Abdominal Ausente': ausente_checkbox_abdominal_esquerdo.value
+                    }
+        } # FIM REFLEXOS SUPERFICIAIS
+        reflexos = {
+                    'reflexos Profundos':reflexosProfundos,
+                    'reflexos Superficiais':reflexosSuperficiais
+        }
+        motricidadeInvoluntaria = {
+                'Movimentos Coreicos': movimentos_coreicos.value,
+                'Movimentos Aleatorios': movimentos_atetoicos.value,
+                'Balismo': balismo.value,
+                'Distonia': distonia.value,
+                'Câimbras': caimbras.value,
+                'Convulsoes': convulsoes.value,
+                'Miocionia': miocionia.value,
+                'Soluços': solucos.value,
+                'Espasmos': espasmos.value,
+                'Faciculações(Micimias)': fasciculacoes.value,
+                'Tremores': tremores.value,
+                'Tiques': tiques.value
+        }# FIM MOTRICIDADE INVOLUNTARIA
 
-        dados = json.dumps(dados),
-        requisicao = requests.post(f'{link}/Prontuarios/.json', data=json.dumps(dados))
+        atividadesFuncionais = {
+                'DD p DLE : DD p DLD': ddp.value,
+                'DLE p DV : DLD p DV': dle.value,
+                '4 apoios': quatro_apoios.value,
+                '4 apoios p ajoelhado': quatro_ajoelhado.value,
+                'Semi ajoelhado p de pe': semi_ajoelhado.value,
+                'Arastar Cruzado': arrastar_cruzado.value,
+                'Sentado': sentado.value,
+                'Ajoelhado p semi ajoelhado': semi_ajoelhado.value,
+                'Rolar': rolar.value,
+                'Arastar Homolateral': arrastar.value
+        }
+
+        coordenacao = {
+                'index-index': index_index_valor,
+                'index-nariz': index_nariz_valor,
+                'calcanhar joelho': calcanhar_joelho_valor
+
+        }  # FIM COORDENAÇÃO
+        equilibrio = {
+                'Tronco': tronco_valor,
+                'Romberg': romberg_valor,
+                'Romberg Sensibilizado': romberg_sensibilizado_valor
+        }  # FIM EQUILIBRIO
+        testesFuncionais = {
+                'TUG': testes_funcionas_valor#
+        } # FIM TESTES FUNCIONAIS
+
+        dados = {
+            'nome': nome_paciente.value,
+            'idade': idade_paciente.value,
+            'sexo': sexo_paciente_valor,
+            'cidade': endereco_paciente.value,
+            'telefone': telefone_paciente.value,
+            'anamnese':anamnese,
+            'inspecao':inspecao,
+            'palpacao':palpacao,
+            'adm':adm,
+            'reflexos':reflexos,
+            'motricidade Involuntaria':motricidadeInvoluntaria,
+            'atividades Funcionais':atividadesFuncionais,
+            'coordenacao':coordenacao,
+            'equilibrio':equilibrio,
+            'AVDs': avd_valor,
+            'testes Funcionais':testesFuncionais,
+            'Avalialcao Marcha': avaliacao_marcha_valor,
+            'Observacoes': observacoes.value
+        }
+
+        requisicao = requests.post(f'{link}Prontuarios/.json', data=json.dumps(dados))
         print(requisicao.content)
         print(requisicao)
 
